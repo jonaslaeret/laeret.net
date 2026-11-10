@@ -420,8 +420,8 @@
     <h1>Jonas Krogh Læret</h1>
     <p class="lede">Jeg hjelper selskaper med å få reell verdi ut av AI og egne data, fra første kartlegging til løsninger som faktisk tas i bruk.</p>
     <div class="actions">
-      <a class="btn primary" href="mailto:jonas@laeret.net">jonas@laeret.net</a>
-      <a class="btn secondary" href="tel:+4791871632">+47 918 71 632</a>
+      <a class="btn primary" href="mailto:jonas@laeret.net" data-goatcounter-click="epost-topp">jonas@laeret.net</a>
+      <a class="btn secondary" href="tel:+4791871632" data-goatcounter-click="telefon-topp">+47 918 71 632</a>
     </div>
   </div>
   <a class="dive" href="#tilbud">Dykk ned<span aria-hidden="true"><svg viewBox="0 0 16 20" width="16" height="20"><path d="M8 2v15M2 11l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
@@ -756,8 +756,8 @@
     <h2>Start med en <span class="nw">AI-kartlegging</span></h2>
     <p class="lead">Rundt tre uker, fast pris. Dere får vite hvor dere står med data og AI, også om dere allerede er i gang, og en prioritert plan med gevinster dere kan starte på med en gang. Ta kontakt, så tar vi en uforpliktende prat først.</p>
     <div class="actions">
-      <a class="btn primary" href="mailto:jonas@laeret.net?subject=AI-kartlegging">Send meg en e-post</a>
-      <a class="btn secondary" href="tel:+4791871632">+47 918 71 632</a>
+      <a class="btn primary" href="mailto:jonas@laeret.net?subject=AI-kartlegging" data-goatcounter-click="epost-slutt">Send meg en e-post</a>
+      <a class="btn secondary" href="tel:+4791871632" data-goatcounter-click="telefon-slutt">+47 918 71 632</a>
     </div>
     <footer>
       <p>Jonas Krogh Læret · <a href="mailto:jonas@laeret.net">jonas@laeret.net</a></p>
@@ -1490,9 +1490,11 @@
       btn.setAttribute('aria-expanded', on);
       btn.setAttribute('aria-label', on ? 'Vis forsiden' : label);
       front.inert = on; back.inert = !on;
+      if (on && window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: 'snu-' + card.querySelector('h3').textContent.trim(), title: 'Snudde kort', event: true });
     };
     card.addEventListener('click', (e) => { if (!e.target.closest('a')) flip(); });
   });
 </script>
+<script data-goatcounter="https://laeret.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
