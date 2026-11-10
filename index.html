@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jonas Krogh Læret · Maritim teknologi, AI og data</title>
+<meta name="description" content="Rådgivning innen AI, data og digital omstilling for rederier, verft og skipsdesignere. 12+ år i maritim teknologi, tidligere CTO i Marine Hybrid Solutions og gruppeleder i Kongsberg Maritime.">
+<meta property="og:title" content="Jonas Krogh Læret · Maritim teknologi, AI og data">
+<meta property="og:description" content="Jeg hjelper selskaper med å få reell verdi ut av AI og egne data.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://laeret.net/">
+<meta property="og:locale" content="nb_NO">
+<meta property="og:image" content="https://laeret.net/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Jonas Krogh Læret foran en solnedgang over havet. Maritim teknologi, AI og data.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://laeret.net/">
+<meta name="theme-color" content="#20556c">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preload" href="fonts/jost.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  @font-face {
+    font-family: "Jost";
+    src: url("fonts/jost.woff2") format("woff2");
+    font-weight: 100 900;
+    font-display: swap;
+  }
+  :root {
+    --navy: #13233a;
+    --ink-soft: #3c4b5e;
+    --cream: #f4e9d4;
+    --paper: #ffffff;
+    --coral: #e0624a;
+    --coral-dark: #a23a26;
+    --coral-light: #f39a7c;
+    --sea: #20556c;
+    --max: 68rem;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    font-family: "Jost", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--navy);
+    background: var(--paper);
+  }
+  body::after {
+    content: ""; position: fixed; inset: 0; z-index: 100; pointer-events: none;
+    opacity: .2; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .ocean .wrap, .shore .wrap { max-width: 51rem; }
+  #tilbud .wrap { max-width: 62rem; }
+  #bakgrunn .wrap { max-width: 66rem; }
+  #bakgrunn .bg-head, #bakgrunn .cv { max-width: 50rem; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 2; }
+
+  .btn {
+    display: inline-block; padding: .7rem 1.3rem; border-radius: 999px;
+    font-weight: 500; letter-spacing: .02em; text-decoration: none; border: 1.5px solid var(--navy);
+  }
+  .btn.primary { background: var(--navy); color: var(--cream); }
+  .btn.primary:hover { background: #0a1626; }
+  .btn.secondary { color: var(--navy); }
+  .btn.secondary:hover { background: rgba(255,255,255,.35); }
+  .actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+
+  /* ---------- Surface ---------- */
+  .hero { position: relative; height: 100vh; height: 100svh; min-height: 560px; overflow: hidden; background: var(--sea); }
+  #scene { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .hero-text {
+    position: absolute; z-index: 2;
+    top: clamp(1.5rem, 7vh, 5rem); left: clamp(1.25rem, 5vw, 5.5rem);
+    max-width: 35rem; padding-right: 1.25rem;
+  }
+  .eyebrow {
+    margin: 0 0 .9rem;
+    font-size: .8rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--coral-dark);
+  }
+  h1 {
+    margin: 0;
+    font-weight: 600; text-transform: uppercase; letter-spacing: .03em;
+    font-size: clamp(2.3rem, 5.4vw, 4.6rem); line-height: .98;
+  }
+  .lede { max-width: 31rem; margin: 1.25rem 0 1.6rem; font-size: clamp(1.05rem, 1.5vw, 1.25rem); line-height: 1.5; color: #2c3d52; }
+  .dive {
+    position: absolute; z-index: 2; left: 50%; bottom: 1.25rem; transform: translateX(-50%);
+    color: var(--cream); text-decoration: none; text-align: center;
+    font-size: .78rem; font-weight: 500; letter-spacing: .25em; text-transform: uppercase;
+  }
+  .dive span { display: block; font-size: 1.3rem; letter-spacing: 0; animation: nudge 2.6s ease-in-out infinite; }
+
+  .band { animation: drift var(--dur) linear infinite; }
+  .bob { animation: bob var(--bdur) ease-in-out infinite alternate; }
+  .cloud { animation: cloud var(--cd) ease-in-out infinite alternate; }
+  .glint { animation: glint var(--gd) ease-in-out infinite; }
+
+  /* ---------- Ocean ---------- */
+  .ocean {
+    position: relative; overflow: hidden; color: #d3e1e7;
+    background: linear-gradient(180deg, #20556c 0%, #1a4b62 16%, #133c52 38%, #0c2a3d 64%, #071c2a 88%, #05141f 100%);
+  }
+  .ocean section { position: relative; padding: clamp(5rem, 13vh, 9rem) 0; }
+  .depth {
+    margin: 0 0 .75rem;
+    font-size: .75rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+    color: #f7b49c; font-variant-numeric: tabular-nums;
+  }
+  .ocean h2 {
+    margin: 0 0 2.5rem; color: var(--cream);
+    font-weight: 600; text-transform: uppercase; letter-spacing: .04em;
+    font-size: clamp(1.8rem, 3.6vw, 2.7rem); line-height: 1.05;
+  }
+  .bubble {
+    position: absolute; bottom: -20px; border-radius: 50%;
+    border: 1.5px solid rgba(244,233,212,.4);
+    animation: rise var(--bd) linear infinite; animation-delay: var(--bdl);
+    pointer-events: none;
+  }
+
+  .offers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.4rem; }
+  .offer { background: var(--cream); color: var(--navy); border-radius: 4px; padding: 1.5rem 1.6rem; box-shadow: 0 8px 0 rgba(5, 20, 31, .28); }
+  .offer h3 { margin: 0 0 .5rem; font-size: 1.15rem; font-weight: 600; line-height: 1.3; }
+  .offer p { margin: 0; color: var(--ink-soft); }
+  .tag {
+    display: inline-block; margin-bottom: .6rem;
+    font-size: .72rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--coral-dark);
+  }
+
+  /* flip cards: the whole card turns; the corner button is the accessible control */
+  .card { position: relative; perspective: 1400px; cursor: pointer; transition: transform .25s ease; }
+  .card:hover { transform: translateY(-4px); }
+  .card-inner { display: grid; height: 100%; transform-style: preserve-3d; transition: transform .75s cubic-bezier(.2, .7, .2, 1); }
+  .card.flipped .card-inner { transform: rotateY(180deg); }
+  .face { grid-area: 1 / 1; backface-visibility: hidden; -webkit-backface-visibility: hidden; padding-right: 3.2rem; }
+  .face.back { transform: rotateY(180deg); background: #f39a7c; }
+  .face.back p { color: var(--navy); }
+  .face ul { margin: 0 0 .9rem; padding-left: 1.1rem; color: var(--navy); }
+  .face li { margin-bottom: .35rem; }
+  .flip {
+    position: absolute; top: .9rem; right: .9rem; z-index: 2; width: 2.4rem; height: 2.4rem; padding: .45rem;
+    border: 0; border-radius: 50%; background: transparent; color: var(--coral-dark); cursor: pointer;
+    transition: transform .4s ease, background .2s ease, color .2s ease;
+  }
+  .flip svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .card:hover .flip { background: rgba(162, 58, 38, .1); transform: rotate(-90deg); }
+  .card.flipped .flip { color: var(--navy); }
+  .card.flipped:hover .flip { background: rgba(19, 35, 58, .1); }
+  .flip:focus-visible { outline: 3px solid var(--coral-light); outline-offset: 2px; }
+
+  /* the change-management story */
+  .article .intro p { margin: 0 0 1rem; font-size: 1.08rem; }
+  .kotter { list-style: none; margin: 2.5rem 0 0; padding: 0; display: grid; gap: 1.9rem; }
+  .kotter h3 { display: flex; align-items: baseline; gap: 1rem; margin: 0 0 .45rem; color: var(--cream); font-size: 1.25rem; font-weight: 600; line-height: 1.3; }
+  .kotter h3 span { flex: 0 0 auto; min-width: 3rem; white-space: nowrap; color: var(--coral-light); font-size: 1.9rem; font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; }
+  .kotter p { margin: 0 0 .7rem; padding-left: 4rem; }
+  .kotter strong { color: var(--cream); font-weight: 600; }
+  .article .interlude { margin: 2.6rem 0 0; padding: 1.1rem 1.4rem; border-left: 3px solid var(--coral-light); background: rgba(5, 20, 31, .3); color: #e6eef1; font-size: 1.08rem; }
+  .story { display: grid; grid-template-columns: 1fr 1.3fr; gap: 3rem; align-items: start; }
+  .story .figure {
+    margin: 0; color: var(--cream);
+    font-weight: 500; font-size: clamp(2rem, 4vw, 2.9rem); line-height: 1.1;
+  }
+  .story .figure span { color: var(--coral-light); }
+  .story p { margin: 0 0 1rem; }
+  #reisen { padding-bottom: clamp(12rem, 22vh, 15rem); }
+
+  .bg-head { display: flex; align-items: center; justify-content: space-between; gap: 2rem; margin-bottom: 1rem; }
+  .bg-head h2 { margin-bottom: 0; }
+  .porthole { position: relative; flex: 0 0 auto; margin: 0; width: clamp(112px, 13vw, 170px); aspect-ratio: 1; border-radius: 50%; padding: 9px;
+    background: radial-gradient(circle at 35% 30%, #f0cf7a, #b8893a 55%, #7a5a22); box-shadow: 0 0 0 2px #5c4318, 0 10px 24px rgba(0, 0, 0, .45); }
+  .porthole img { display: block; width: 100%; height: 100%; border-radius: 50%; object-fit: cover; box-shadow: inset 0 0 0 2px #5c4318; }
+  .porthole::after { content: ""; position: absolute; inset: 9px; border-radius: 50%; pointer-events: none;
+    background: linear-gradient(135deg, rgba(255, 255, 255, .28), rgba(255, 255, 255, 0) 40%), radial-gradient(circle, rgba(11, 37, 54, 0) 62%, rgba(11, 37, 54, .45)); }
+  .cv { list-style: none; margin: 0; padding: 0; }
+  .cv li { display: grid; grid-template-columns: 9rem 1fr; gap: 1.5rem; padding: 1.2rem 0; border-top: 1px solid rgba(244,233,212,.14); }
+  .cv li:first-child { border-top: 0; }
+  .cv .when { color: var(--coral-light); font-variant-numeric: tabular-nums; }
+  .cv strong { color: var(--cream); font-weight: 600; }
+  .cv p { margin: .25rem 0 0; }
+  #bakgrunn { padding-bottom: clamp(10rem, 20vh, 13rem); }
+
+  /* ---------- Under water ---------- */
+  .ocean-bg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .uw-rays { position: absolute; top: 0; left: 0; width: 100%; height: min(140vh, 1400px); display: block; mix-blend-mode: screen; pointer-events: none; }
+  .ray { animation: ray-sway var(--rd) ease-in-out infinite alternate; transform-box: view-box; transform-origin: 50% 0; }
+  .deco { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; pointer-events: none; }
+  .worm { transform-box: fill-box; transform-origin: 50% 0; animation: worm 1.6s ease-in-out infinite alternate; }
+  .nibbler { animation: nibble 9s ease-in-out infinite; }
+  .shine { animation: shine var(--sd, 4s) ease-in-out infinite alternate; }
+  .snow { position: absolute; top: -10px; width: 3px; height: 3px; border-radius: 50%; background: rgba(244,233,212,.32); pointer-events: none; animation: snow var(--sn) linear infinite; animation-delay: var(--snd); }
+
+  .cod { position: absolute; right: 3vw; bottom: 7rem; width: clamp(170px, 22vw, 290px); z-index: 1; animation: hover 7s ease-in-out infinite alternate; }
+  .cod .tail { transform-box: fill-box; transform-origin: 0% 50%; animation: tail 1.8s ease-in-out infinite alternate; }
+  .cod .pec { transform-box: fill-box; transform-origin: 0% 0%; animation: pec 1.2s ease-in-out infinite alternate; }
+  .cable { position: absolute; left: 0; bottom: 0; width: 100%; height: 90px; display: block; }
+  .cable .pulse { animation: data 6s linear infinite; }
+
+  .angler { overflow: visible; position: absolute; left: -1vw; top: 34%; width: clamp(150px, 15vw, 220px); animation: hover 9s ease-in-out infinite alternate; }
+  .angler .glow { animation: lure 3.2s ease-in-out infinite; }
+  .angler .jaw { transform-box: fill-box; transform-origin: 0% 0%; animation: jaw 5s ease-in-out infinite; }
+  .rov { position: absolute; right: 3vw; top: 3rem; width: clamp(170px, 22vw, 300px); overflow: visible; animation: rov 18s ease-in-out infinite alternate; }
+  .rov .arm1 { transform-box: fill-box; transform-origin: 100% 0%; animation: rov-arm 6s ease-in-out infinite alternate; }
+  .rov .tether-short { display: none; }
+  @media (max-width: 760px) { .rov .tether-short { display: inline; } }
+  .rov .led { animation: blink 2s steps(1) infinite; }
+  .rov .speck { animation: speck var(--sp) linear infinite; animation-delay: var(--spd); }
+  .seabed { position: absolute; left: 0; bottom: 0; width: 100%; height: 240px; display: block; }
+  .seapen { transform-box: fill-box; transform-origin: 50% 100%; animation: sway var(--kd, 6s) ease-in-out infinite alternate; }
+  .tentacle { transform-box: fill-box; transform-origin: 0% 50%; animation: arm 3.6s ease-in-out infinite alternate; }
+  .octo-eye { animation: peek 7s ease-in-out infinite; }
+
+  /* ---------- Polyps: spawn, line up in a band, then hang as a reef ---------- */
+  .polyps { position: relative; height: 330vh; background: #05141f; }
+  .polyps-stage { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+  .polyps canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+  @keyframes ray-sway { from { opacity: .55; transform: skewX(-3deg); } to { opacity: 1; transform: skewX(3deg); } }
+  @keyframes caustic { from { transform: translate(0, 0) scale(1); } to { transform: translate(-60px, 8px) scale(1.04); } }
+  @keyframes worm { from { transform: rotate(-14deg); } to { transform: rotate(16deg); } }
+  @keyframes nibble { 0%, 100% { transform: translate(0, 0); } 40% { transform: translate(46px, -6px); } 47% { transform: translate(52px, -3px); } 55% { transform: translate(-36px, 12px); } }
+  @keyframes shine { from { opacity: .15; } to { opacity: .8; } }
+  @keyframes tail { from { transform: rotate(-7deg); } to { transform: rotate(7deg); } }
+  @keyframes pec { from { transform: rotate(-10deg); } to { transform: rotate(14deg); } }
+  @keyframes jaw { 0%, 70%, 100% { transform: rotate(0deg); } 80% { transform: rotate(10deg); } }
+  @keyframes rov-arm { from { transform: rotate(-6deg); } to { transform: rotate(9deg); } }
+  @keyframes blink { 0%, 60% { opacity: 1; } 61%, 100% { opacity: .15; } }
+  @keyframes speck { from { transform: translate(0, 0); opacity: 0; } 20% { opacity: 1; } to { transform: translate(-90px, 40px); opacity: 0; } }
+  @keyframes peek { 0%, 100% { transform: translate(0, 0); } 45%, 60% { transform: translate(-3px, -1px); } }
+
+  /* ---------- Shore ---------- */
+  .shore { background: var(--paper); padding: 2rem 0 5rem; }
+  .shore .depth { color: var(--coral-dark); }
+  .shore h2 {
+    margin: 0 0 1.25rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em;
+    font-size: clamp(1.9rem, 4vw, 3rem); line-height: 1.05;
+  }
+  .nw { white-space: nowrap; }
+  .shore .lead { max-width: 38rem; font-size: 1.2rem; color: #2c3d52; margin: 0 0 2rem; }
+  footer { border-top: 1px solid #dfe4ea; margin-top: 5rem; padding-top: 2rem; color: var(--ink-soft); font-size: .95rem; }
+  footer p { margin: .2rem 0; }
+  footer a { color: var(--coral-dark); }
+
+  /* ---------- Keyframes ---------- */
+  @keyframes drift { to { transform: translateX(var(--wl)); } }
+  @keyframes bob { to { transform: translateY(var(--ba)); } }
+  @keyframes cloud { to { transform: translateX(var(--cx)); } }
+  @keyframes glint { 0%, 100% { opacity: .1; } 50% { opacity: .75; } }
+  @keyframes nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+  @keyframes ray { from { opacity: .35; } to { opacity: 1; } }
+  @keyframes rise { from { transform: translateY(0); opacity: 0; } 10% { opacity: 1; } to { transform: translateY(-110vh); opacity: 0; } }
+  @keyframes swim { from { transform: translateX(-260px); } to { transform: translateX(calc(100vw + 40px)); } }
+  @keyframes swim-back { from { transform: translateX(calc(100vw + 40px)) scaleX(-1); } to { transform: translateX(-260px) scaleX(-1); } }
+  @keyframes jelly-drift { from { transform: translate(0, 0); } to { transform: translate(18px, -70px); } }
+  @keyframes pulse { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.06, .86); } }
+  @keyframes hover { to { transform: translateY(-14px); } }
+  @keyframes data { to { stroke-dashoffset: -248; } }
+  @keyframes sway { from { transform: rotate(-2deg); } to { transform: rotate(2.5deg); } }
+  @keyframes snow { to { transform: translate(40px, 120vh); } }
+  @keyframes lure { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+  @keyframes rov { from { transform: translate(0, 0) rotate(-1deg); } to { transform: translate(-50px, 30px) rotate(2deg); } }
+  @keyframes arm { from { transform: rotate(-8deg); } to { transform: rotate(14deg); } }
+
+  @media (max-width: 760px) {
+    .story { grid-template-columns: 1fr; gap: 1.5rem; }
+    .cv li { grid-template-columns: 1fr; gap: .25rem; }
+    .cod { bottom: 4.5rem; }
+    .rov { top: 1rem; }
+    .angler { display: none; }
+    .rov .tether-long { display: none; }
+  }
+  @media (max-width: 760px) { .offers { grid-template-columns: 1fr; } .kotter p { padding-left: 0; } .kotter h3 span { flex-basis: 2.4rem; } }
+  .paused, .paused * { animation-play-state: paused !important; }
+  @media (prefers-reduced-motion: reduce) {
+    .card-inner { transition: none; }
+    *, *::before, *::after { animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="mackerel" viewBox="-24 -9 48 18" overflow="visible">
+      <path d="M-17 0 L-23 -6.5 L-20.5 0 L-23 6.5 Z" fill="#2f5f73"/>
+      <path d="M-17 0 C-10 -6 6 -7 16 -3 C20 -1.5 21 0 20 1 C14 4 0 5.5 -17 0 Z" fill="#cddbe0"/>
+      <path d="M-16 -.8 C-8 -5.5 6 -6.6 16 -3 C18 -2 19.5 -1 20 0 C12 -1.5 -2 -2 -16 -.8 Z" fill="#2e6d80"/>
+      <path d="M-10 -3 C-9 -1.6 -8 -1.6 -7 -2.6 M-5 -4.4 C-4 -2.6 -3 -2.4 -2 -3.8 M0 -5 C1 -3 2 -2.8 3 -4.4 M5 -5 C6 -3.2 7 -3 8 -4.2 M10 -4.3 C11 -2.8 12 -2.8 13 -3.5" stroke="#163c4a" stroke-width=".9" fill="none"/>
+      <path d="M-12 1.6 C-2 4 8 3.8 16 1.6" stroke="#f6f3ec" stroke-width=".9" fill="none" opacity=".75"/>
+      <path d="M-6 -4.7 L-4 -7.4 L-2 -5 Z M-12 -2.8 L-11 -4.4 L-10 -3 Z M-8 3 L-6 5 L-4 3.4 Z" fill="#2e6d80"/>
+      <path d="M8 0 L3 2.6 L9 1.2 Z" fill="#9fb7bf"/>
+      <circle cx="15" cy="-1.4" r="1.6" fill="#f4e9d4"/><circle cx="15.3" cy="-1.4" r=".85" fill="#13233a"/>
+    </symbol>
+    <symbol id="fishsil" viewBox="-24 -9 48 18" overflow="visible">
+      <path d="M-17 0 C-10 -6 6 -7 16 -3 C20 -1.5 21 0 20 1 C14 4 0 5.5 -17 0 Z M-16 0 L-23 -6.5 L-20.5 0 L-23 6.5 Z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ============ SURFACE ============ -->
+<header class="hero" id="top">
+  <svg id="scene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="560" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#e9e0cc"/>
+        <stop offset=".55" stop-color="#f3cd9f"/>
+        <stop offset="1" stop-color="#ef9f7a"/>
+      </linearGradient>
+      <linearGradient id="haze" x1="0" y1="560" x2="0" y2="606" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#d9a28c"/>
+        <stop offset="1" stop-color="#5a8c99"/>
+      </linearGradient>
+      <mask id="sunmask" maskUnits="userSpaceOnUse" x="700" y="380" width="400" height="300">
+        <rect x="700" y="380" width="400" height="300" fill="#fff"/>
+        <rect x="700" y="498" width="400" height="2.5" fill="#000"/>
+        <rect x="700" y="513" width="400" height="3.5" fill="#000"/>
+        <rect x="700" y="527" width="400" height="4.5" fill="#000"/>
+        <rect x="700" y="540" width="400" height="6" fill="#000"/>
+        <rect x="700" y="552" width="400" height="8" fill="#000"/>
+      </mask>
+      <radialGradient id="lglow"><stop offset="0" stop-color="#fff3c4"/><stop offset="1" stop-color="#fff3c4" stop-opacity="0"/></radialGradient>
+    </defs>
+
+    <rect x="-2000" y="-2400" width="5600" height="2960" fill="url(#sky)"/>
+    <circle cx="900" cy="548" r="190" fill="#f6bd90" opacity=".45"/>
+    <circle cx="900" cy="548" r="112" fill="#e0624a" mask="url(#sunmask)"/>
+
+    <!-- clouds: layered cumulus (built in script) and thin streaks near the horizon -->
+    <g id="clouds"></g>
+
+    <!-- distant range, far islands with sunlit facets and boathouses -->
+    <path fill="#e2b6a0" d="M-300 560 L-300 536 C-220 530 -150 512 -80 508 C-20 505 30 520 80 522 L140 560 Z M1040 560 C1110 550 1180 526 1260 506 C1320 492 1380 470 1440 466 C1500 470 1560 494 1620 504 C1700 516 1800 524 1900 528 L1900 560 Z"/>
+    <path fill="#c99b90" d="M-300 560 L-300 520 C-150 515 0 498 90 504 C170 509 230 528 300 536 C360 542 410 532 470 540 L520 560 Z"/>
+    <path fill="#d8ad9d" d="M90 504 C170 509 230 528 300 536 C360 542 410 532 470 540 L520 560 L330 560 C280 548 200 524 90 504 Z"/>
+    <path fill="#c99b90" d="M1160 560 C1220 548 1270 520 1340 516 C1410 512 1460 530 1520 526 C1580 523 1700 530 1900 536 L1900 560 Z"/>
+    <path fill="#d8ad9d" d="M1160 560 C1220 548 1270 520 1340 516 C1300 530 1270 548 1250 560 Z"/>
+    <path fill="#a8838a" d="M1380 560 C1420 552 1460 540 1500 541 C1540 542 1570 552 1600 556 L1900 560 Z"/>
+    <g>
+      <rect x="1296" y="525" width="8" height="5" fill="#f4e9d4"/><path d="M1295 525.5 L1300 521.5 L1305 525.5 Z" fill="#a8483a"/>
+      <rect x="1312" y="523" width="6" height="5" fill="#b8503e"/><rect x="1440" y="521" width="7" height="4.5" fill="#f4e9d4"/>
+      <rect x="226" y="526" width="7" height="5" fill="#b8503e"/><rect x="240" y="528" width="6" height="4" fill="#f4e9d4"/>
+    </g>
+
+    <rect x="-2000" y="560" width="5600" height="400" fill="url(#haze)"/>
+    <!-- reflections in the calm far water -->
+    <g opacity=".22" fill="#6d5869">
+      <path d="M-300 560 L-300 571 C-150 573 0 580 90 578 C170 577 230 570 300 566 C360 563 410 566 470 562 L520 560 Z"/>
+      <path d="M1160 560 C1220 563 1270 571 1340 572 C1410 573 1460 568 1520 569 C1580 570 1700 567 1900 565 L1900 560 Z"/>
+    </g>
+    <ellipse cx="900" cy="565" rx="130" ry="5" fill="#f7b78f" opacity=".7"/>
+    <g id="gl0"></g>
+    <g id="lane-far"></g>
+    <g id="band1"></g>
+    <g id="gl1"></g>
+
+    <!-- near island with boathouse, and the lighthouse -->
+    <path fill="#8a7d8b" d="M-300 600 L-300 566 C-200 556 -100 546 0 548 C60 550 110 566 160 578 C200 588 230 596 260 602 Z"/>
+    <path fill="#9d8d98" d="M0 548 C60 550 110 566 160 578 C200 588 230 596 260 602 L120 602 C100 580 60 560 0 548 Z"/>
+    <g transform="translate(58 551)">
+      <rect x="0" y="0" width="30" height="16" fill="#b8432f"/><rect x="21" y="0" width="9" height="16" fill="#9a3626"/>
+      <path d="M-3 1 L15 -11 L33 1 Z" fill="#3b3a46"/><rect x="9" y="6" width="9" height="10" fill="#f4e9d4"/>
+    </g>
+    <g id="lighthouse">
+      <path d="M520 660 C532 630 552 614 580 610 C610 606 640 620 660 660 Z" fill="#3b4a5c"/>
+      <path d="M520 660 C532 630 552 614 580 610 C566 624 556 640 552 660 Z" fill="#4e6075"/>
+      <rect x="610" y="600" width="30" height="26" fill="#f4e9d4"/><rect x="630" y="600" width="10" height="26" fill="#ddd0b9"/>
+      <rect x="616" y="607" width="6" height="6" fill="#3b4a5c"/>
+      <path d="M606 601 L625 588 L644 601 Z" fill="#c24a35"/><path d="M625 588 L644 601 L634 601 Z" fill="#9a3626"/>
+      <path d="M573 614 L577 550 L593 550 L597 614 Z" fill="#f5efe3"/>
+      <path d="M586 550 L593 550 L597 614 L587 614 Z" fill="#ddd3c2"/>
+      <path d="M575.5 590 L576.3 578 L593.7 578 L594.5 590 Z" fill="#c24a35"/>
+      <path d="M576.9 566 L577.4 558 L592.6 558 L593.1 566 Z" fill="#c24a35"/>
+      <path d="M586.2 578 L593.7 578 L594.5 590 L586.6 590 Z M586.1 558 L592.6 558 L593.1 566 L586.2 566 Z" fill="#9a3626"/>
+      <rect x="573" y="547" width="24" height="4" fill="#3b4a5c"/>
+      <rect x="578" y="536" width="14" height="11" fill="#fff3c4" opacity=".85"/>
+      <path d="M578 536 V547 M585 536 V547 M592 536 V547" stroke="#3b4a5c" stroke-width="1.6"/>
+      <path d="M574 537 L585 527 L596 537 Z" fill="#c24a35"/><path d="M585 527 L596 537 L589 537 Z" fill="#9a3626"/>
+      <circle id="lamp" cx="585" cy="541" r="40" fill="url(#lglow)" opacity="0"/>
+    </g>
+
+    <g id="lane-mid"></g>
+    <g id="band2"></g>
+    <g id="gl2"></g>
+
+    <g id="fisher" transform="translate(1130 726)">
+      <g id="fisher-bob">
+        <line id="fline" stroke="#f4e9d4" stroke-width="1" opacity=".85"/>
+        <g id="fitem"></g>
+        <path d="M-48 -16 C-30 -12 30 -12 50 -20 L42 0 L-40 0 Z" fill="#b8743f"/>
+        <path d="M-44 -6 C-20 -3 20 -3 46 -9 L42 0 L-40 0 Z" fill="#94592c"/>
+        <path d="M-46 -11 C-20 -7.5 20 -7.5 48 -14" stroke="#94592c" stroke-width="1" fill="none"/>
+        <path d="M-48 -16 C-30 -12 30 -12 50 -20 L49 -16 C30 -9 -30 -9 -47 -12 Z" fill="#f4e9d4"/>
+        <rect x="2" y="-40" width="18" height="27" rx="6" fill="#e9b44c"/>
+        <circle cx="11" cy="-46" r="6.5" fill="#e8b896"/>
+        <path d="M2.5 -48 C3 -58 19 -58 19.5 -48 Z" fill="#e9b44c"/>
+        <path d="M-1 -48 L25 -45 L23 -42 L0 -45.5 Z" fill="#d9a23c"/>
+        <g id="rod"><line x1="0" y1="-30" x2="-60" y2="-74" stroke="#3b3027" stroke-width="2.2" stroke-linecap="round"/></g>
+        <path d="M-1 -33 L8 -31 L8 -26 L-2 -29 Z" fill="#e9b44c"/>
+        <text id="fsay" x="8" y="-66" font-size="16" font-weight="700" fill="#13233a" text-anchor="middle" opacity="0" font-family="Jost, sans-serif"></text>
+      </g>
+    </g>
+
+    <g id="sink"></g>
+    <g id="band3"></g>
+    <g id="gl3"></g>
+    <g id="band4"></g>
+    <g id="gl4"></g>
+    <g id="fx"></g>
+  </svg>
+
+  <div class="hero-text">
+    <p class="eyebrow">Maritim teknologi · AI · data</p>
+    <h1>Jonas Krogh Læret</h1>
+    <p class="lede">Jeg hjelper selskaper med å få reell verdi ut av AI og egne data, fra første kartlegging til løsninger som faktisk tas i bruk.</p>
+    <div class="actions">
+      <a class="btn primary" href="mailto:jonas@laeret.net">jonas@laeret.net</a>
+      <a class="btn secondary" href="tel:+4791871632">+47 918 71 632</a>
+    </div>
+  </div>
+  <a class="dive" href="#tilbud">Dykk ned<span aria-hidden="true"><svg viewBox="0 0 16 20" width="16" height="20"><path d="M8 2v15M2 11l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+</header>
+
+<!-- ============ UNDER WATER ============ -->
+<main class="ocean">
+  <svg class="ocean-bg" id="ocean-bg" preserveAspectRatio="none" aria-hidden="true"></svg>
+
+  <svg class="uw-rays" viewBox="0 0 1600 1000" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="rayg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fff1cf" stop-opacity="0"/><stop offset=".14" stop-color="#fff1cf" stop-opacity=".36"/><stop offset=".55" stop-color="#fff1cf" stop-opacity=".12"/><stop offset="1" stop-color="#fff1cf" stop-opacity="0"/>
+      </linearGradient>
+      <filter id="rayblur" x="-30%" y="-5%" width="160%" height="110%"><feGaussianBlur stdDeviation="9"/></filter>
+    </defs>
+    <linearGradient id="rayfade" x1="0" y1="0" x2="0" y2="220" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#000"/><stop offset="1" stop-color="#fff"/></linearGradient>
+    <mask id="raymask" maskUnits="userSpaceOnUse" x="-200" y="-50" width="2000" height="1100"><rect x="-200" y="-50" width="2000" height="1100" fill="url(#rayfade)"/></mask>
+    <g mask="url(#raymask)"><g id="rays" filter="url(#rayblur)"></g></g>
+  </svg>
+
+  <section id="tilbud">
+    <svg class="deco" id="deco1" aria-hidden="true"></svg>
+    <div class="wrap">
+      <p class="depth">Dybde 10 m</p>
+      <h2>Hvordan jeg kan hjelpe</h2>
+      <div class="offers">
+        <article class="card">
+          <div class="card-inner">
+            <div class="face front offer">
+              <h3>AI-kartlegging</h3>
+              <p>En avgrenset kartlegging på rundt tre uker, til fast pris. Den passer både for dere som står ved start, og for dere som allerede bruker AI og vil få mer ut av det. Jeg snakker med nøkkelpersonene deres, ser på systemer, data og verktøyene dere bruker i dag, og leverer en prioritert plan med konkrete gevinster dere kan starte på med en gang.</p>
+            </div>
+            <div class="face back offer" inert>
+              <h3>Slik foregår det</h3>
+              <ul>
+                <li><strong>Uke 1:</strong> Samtaler med ledelse og nøkkelpersoner, gjennomgang av systemer og datakilder.</li>
+                <li><strong>Uke 2:</strong> Hva fungerer allerede, hvor kan AI gi mer effekt, og hva må på plass først?</li>
+                <li><strong>Uke 3:</strong> Prioritert plan med tre til fem tiltak, med gevinst og innsats for hvert, presentert for ledelsen.</li>
+              </ul>
+              <p>Planen er deres. Dere kan gjennomføre den selv, eller sammen med meg.</p>
+            </div>
+          </div>
+          <button class="flip" type="button" aria-expanded="false" aria-label="Vis mer om AI-kartlegging"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.6M4 12a8 8 0 0 1 13.7-5.6"/><path d="M18.5 2.8v4h-4M5.5 21.2v-4h4"/></svg></button>
+        </article>
+        <article class="card">
+          <div class="card-inner">
+            <div class="face front offer">
+              <h3>Praktiske workshops</h3>
+              <p>Hackathon er et velkjent begrep i utviklerverdenen. Jeg tar formatet ut i resten av organisasjonen og bruker det til opplæring og utforskning: deres egne folk prøver AI på sitt eget arbeid, med veiledning. Det fungerer godt når de første raske gevinstene fra AI-kartleggingen er på plass.</p>
+            </div>
+            <div class="face back offer" inert>
+              <h3>Slik foregår det</h3>
+              <ul>
+                <li>En kort gjennomgang av hva verktøyene kan i dag.</li>
+                <li>Små grupper på tvers av fag jobber i hackathon-format med egne oppgaver, dokumenter og data.</li>
+                <li>Deltakerne presenterer det de har laget.</li>
+                <li>Ledelsen får tilbakemelding på hvilke initiativer som er lovende og hvordan de kan tas videre, og på hvordan deltakerne som trenger mer hjelp kan utvikle seg videre.</li>
+              </ul>
+              <p>Fra én dag til flere, for 8–30 deltakere, hos dere.</p>
+            </div>
+          </div>
+          <button class="flip" type="button" aria-expanded="false" aria-label="Vis mer om praktiske workshops"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.6M4 12a8 8 0 0 1 13.7-5.6"/><path d="M18.5 2.8v4h-4M5.5 21.2v-4h4"/></svg></button>
+        </article>
+        <article class="card">
+          <div class="card-inner">
+            <div class="face front offer">
+              <h3>Fra idé til verktøy</h3>
+              <p>Når dere vet hva dere vil ha: piloter og interne verktøy bygget på deres egen kompetanse og egne data, med kvalitetskontroll innebygd fra start.</p>
+            </div>
+            <div class="face back offer" inert>
+              <h3>Eksempler</h3>
+              <ul>
+                <li>Verktøy som leser, sjekker og sammenligner spesifikasjoner og tekniske dokumenter.</li>
+                <li>Assistenter som svarer ut fra egne prosedyrer, tegninger og erfaringsdata.</li>
+                <li>Rapporter som lages automatisk fra drifts- og fartøysdata.</li>
+              </ul>
+              <p>Bygget i små steg, med tydelig eierskap til kode og data.</p>
+            </div>
+          </div>
+          <button class="flip" type="button" aria-expanded="false" aria-label="Vis mer om fra idé til verktøy"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.6M4 12a8 8 0 0 1 13.7-5.6"/><path d="M18.5 2.8v4h-4M5.5 21.2v-4h4"/></svg></button>
+        </article>
+        <article class="card">
+          <div class="card-inner">
+            <div class="face front offer">
+              <h3>Teknologileder på deltid</h3>
+              <p>Teknologiledelse for selskaper som har behov for å utvikle måten de arbeider på og utnytte AI bedre i sine prosesser.</p>
+            </div>
+            <div class="face back offer" inert>
+              <h3>Typiske oppgaver</h3>
+              <ul>
+                <li>Lede initiativer og programmer, fra idé til drift.</li>
+                <li>AI- og teknologistrategi, forankret i ledergruppen.</li>
+                <li>Endringsledelse når nye arbeidsmåter skal inn.</li>
+                <li>Leverandørvalg, innkjøp og oppfølging.</li>
+                <li>Sparringspartner for daglig leder og ledergruppen.</li>
+              </ul>
+              <p>Fast avtale, for eksempel én til to dager i uken.</p>
+            </div>
+          </div>
+          <button class="flip" type="button" aria-expanded="false" aria-label="Vis mer om teknologileder på deltid"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.6M4 12a8 8 0 0 1 13.7-5.6"/><path d="M18.5 2.8v4h-4M5.5 21.2v-4h4"/></svg></button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="reisen">
+    <svg class="deco" id="deco2" aria-hidden="true"></svg>
+    <svg class="cod" viewBox="0 0 270 140" aria-hidden="true">
+      <g transform="translate(230 66)"><g class="tail">
+        <path d="M0 0 L32 -30 C38 -10 38 10 32 30 Z" fill="#9c8550"/>
+        <path d="M2 0 L28 -22 M2 0 L33 0 M2 0 L28 22" stroke="#7d6a3c" stroke-width="1.2"/>
+      </g></g>
+      <path d="M84 36 C92 14 114 10 126 32 Z M134 33 C144 16 162 16 170 38 Z M176 42 C186 28 202 30 210 50 Z" fill="#9c8550"/>
+      <path d="M96 30 L104 16 M110 30 L114 14 M146 32 L150 20 M158 32 L160 20 M188 40 L192 32 M198 44 L200 36" stroke="#7d6a3c" stroke-width="1"/>
+      <path d="M122 100 C130 118 150 118 160 98 Z M168 94 C178 108 194 106 202 86 Z" fill="#a48d58"/>
+      <path d="M12 74 C14 58 28 44 52 38 C92 28 144 30 184 40 C206 46 222 56 234 66 C222 76 204 84 184 90 C150 100 100 106 60 100 C34 96 14 88 12 74 Z" fill="#b8a06a"/>
+      <path d="M18 64 C32 48 60 37 100 33 C142 30 182 38 222 58 C196 52 154 47 112 48 C70 49 40 55 18 64 Z" fill="#8f7845"/>
+      <path d="M22 84 C50 98 112 104 176 92 C150 103 92 108 54 101 C38 97 28 92 22 84 Z" fill="#efe4c8"/>
+      <g fill="#7d6a3c" opacity=".8">
+        <circle cx="100" cy="52" r="3.5"/><circle cx="118" cy="44" r="2.5"/><circle cx="140" cy="58" r="4"/><circle cx="160" cy="46" r="2.8"/>
+        <circle cx="176" cy="60" r="3.2"/><circle cx="196" cy="54" r="2.4"/><circle cx="90" cy="70" r="2.6"/><circle cx="128" cy="74" r="3"/>
+        <circle cx="150" cy="80" r="2.4"/><circle cx="172" cy="76" r="2.8"/><circle cx="110" cy="86" r="2"/><circle cx="204" cy="66" r="2.2"/>
+        <circle cx="84" cy="48" r="2"/><circle cx="214" cy="58" r="2"/><circle cx="74" cy="60" r="1.8"/><circle cx="188" cy="72" r="1.8"/>
+      </g>
+      <path d="M48 62 C90 50 150 50 230 64" stroke="#f3e8cc" stroke-width="2" fill="none" opacity=".85"/>
+      <path d="M62 44 C74 58 74 84 62 98" stroke="#7d6a3c" stroke-width="2.5" fill="none"/>
+      <path d="M56 100 C54 112 60 120 68 118 C66 110 64 104 64 100 Z" fill="#a48d58"/>
+      <g transform="translate(80 74)"><path class="pec" d="M0 0 C-4 10 4 22 18 25 C16 14 11 6 0 0 Z" fill="#a48d58"/></g>
+      <path d="M10 71 C12 66 18 64 24 66" stroke="#8f7845" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M12 74 C18 77 28 78 38 75" stroke="#5f4d28" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+      <path d="M30 86 C31 96 27 103 22 107" stroke="#8f7845" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <circle cx="42" cy="58" r="10.5" fill="#f4e9d4"/><circle cx="42" cy="58" r="7.2" fill="#c9a34a"/>
+      <circle id="codpupil" cx="42" cy="58" r="4.6" fill="#13233a"/><circle cx="39" cy="55" r="1.8" fill="#fff" opacity=".9"/>
+    </svg>
+    <div class="wrap article">
+      <p class="depth">Dybde 120 m</p>
+      <h2>AI-omstilling er endringsledelse</h2>
+      <div class="intro">
+        <p>Ved inngangen til 2026 hadde vi i selskapet fire utviklere og fire domeneeksperter, og vi hadde ennå ikke sluppet plattformen vår. For en oppstartsbedrift er tid altoverskyggende, og det var veldig viktig for oss å øke utviklingshastigheten vår.</p>
+        <p>I denne perioden kom det store forbedringer i Claude Code og andre agentiske utviklingsverktøy. Verktøyene var blitt så gode at det var kritisk at alle tok dem i bruk, men fremdeles var det stor skepsis i organisasjonen rundt bruk av AI i utvikling. Man kjente ikke til hvor gode disse verktøyene faktisk var, og man hadde også flere legitime bekymringer knyttet til kompetanseutvikling og eierskap til kode. Dette er problemstillinger som alle organisasjoner må ha et aktivt forhold til.</p>
+        <p>Det var nødvendig å skape en endring i måten organisasjonen jobber på, og da kommer vi til Kotters åtte steg.</p>
+      </div>
+      <ol class="kotter">
+        <li><h3><span>1</span>Skap en følelse av hastverk</h3>
+          <p>Gjennom samtaler den høsten diskuterte vi i større og mindre grupper konsekvensene av AI for samfunnet, for den enkelte og for vår egen konkurransesituasjon. AI-revolusjonen har gitt oss hastverket gratis. Vi må bare utnytte det som organisasjoner.</p></li>
+        <li><h3><span>2</span>Bygg en ledende koalisjon</h3>
+          <p>Jeg valgte ut en gruppe i den tekniske avdelingen og inviterte dem til et tredagers hackathon. Sammensetningen av denne gruppen er viktig. Den bør gjerne inkludere noen av kritikerne, for å gi gruppen troverdighet og samtidig kunne ta hensyn til bekymringene.</p></li>
+        <li><h3><span>3</span>Utvikle en visjon og strategi</h3>
+          <p>På dette tidspunktet har man ristet organisasjonen løs. Nå må man forme den riktig og la den sette seg. Vi bygde opp en ny prosess rundt Software Delivery Lifecycle i selskapet for å adressere den enorme tidsbesparelsen vi så i enkelte utviklingsfaser.</p></li>
+        <li><h3><span>4</span>Kommuniser visjonen</h3>
+          <p>Vi tok med hele utviklingsteamet og låste oss inne i tre dager på en hytte. Der brukte vi den nye arbeidsprosessen til å ta frem et nytt konsept for et produkt vi ville ta til markedet. Da vi kom hjem, presenterte vi resultatene og hva vi hadde lært, i nyhetsbrev og møtefora. Her er det viktig å bruke nøkkelpersonene i koalisjonen og la dem eie resultatene.</p></li>
+      </ol>
+      <ol class="kotter" start="5">
+        <li><h3><span>5–8</span>Få endringene til å sette seg</h3>
+          <p>De siste stegene i Kotters modell handler om å sikre at endringene setter seg. Man kan ikke endre andre mennesker. Det er menneskene i en organisasjon som endrer seg selv og sin egen atferd.</p>
+          <p><strong>Fjern hindringer.</strong> Som ledere sier vi ofte at jobben vår er å fjerne hindringer for de ansatte. Men tenker vi oss godt om, ser vi at vi like ofte bygger opp hindringer. På samme måte som man gjeter en flokk med gjerder og sikringer, bygger vi opp tekniske og organisatoriske hindringer som nører opp under en viss kultur og et visst handlingsmønster. Når vi nå har behov for å endre en organisasjon, betyr det at noen av disse gjerdene må rives, fordi flokken trenger å ta en bedre vei. Hvilke hindringer må du fjerne?</p>
+          <p><strong>Skap kortsiktige seire, og bygg videre på dem.</strong> Vi klarte å selge konseptet vi hadde utviklet på rekordtid til en pilotkunde, og det samme med det neste konseptet. Dermed fikk koalisjonen to viktige seire, og en bekreftelse på at den nye måten å jobbe på var god.</p>
+          <p><strong>Forankre endringene i kulturen.</strong> Avslutningsvis sier Kotter at man må forankre endringene i kulturen: dette ubestemmelige som sitter i veggene, «sånn gjør vi det her». Det er en daglig kamp som organisasjonens ledere må gå i spissen for.</p></li>
+      </ol>
+    </div>
+<svg class="cable" viewBox="0 0 1600 90" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M-10 70 C200 40 380 80 600 58 C820 36 1000 78 1220 60 C1380 48 1500 64 1610 52" stroke="#071c28" stroke-width="8" fill="none" vector-effect="non-scaling-stroke"/>
+      <path d="M-10 70 C200 40 380 80 600 58 C820 36 1000 78 1220 60 C1380 48 1500 64 1610 52" stroke="#1d4357" stroke-width="2" fill="none" vector-effect="non-scaling-stroke" transform="translate(0 -2)"/>
+      <path class="pulse" d="M-10 70 C200 40 380 80 600 58 C820 36 1000 78 1220 60 C1380 48 1500 64 1610 52" stroke="#f39a7c" stroke-width="3" fill="none" stroke-dasharray="6 242" stroke-linecap="round"/>
+    </svg>
+  </section>
+
+  <section id="bakgrunn">
+    <svg class="deco" id="deco3" aria-hidden="true"></svg>
+    <svg class="rov" viewBox="0 0 320 220" aria-hidden="true">
+      <defs>
+        <linearGradient id="rovbeam" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#fff3c4" stop-opacity=".55"/><stop offset="1" stop-color="#fff3c4" stop-opacity="0"/></linearGradient>
+        <filter id="beamblur" x="-10%" y="-30%" width="120%" height="160%"><feGaussianBlur stdDeviation="6"/></filter>
+      </defs>
+      <path class="tether-long" d="M206 20 C204 -400 214 -820 238 -1120 C256 -1320 320 -1440 680 -1560" stroke="#e9b44c" stroke-width="3" fill="none"/>
+      <path class="tether-short" d="M206 20 C206 -110 214 -200 262 -270 C304 -330 380 -360 560 -390" stroke="#e9b44c" stroke-width="3" fill="none"/>
+      <path d="M206 18 L206 40" stroke="#20272f" stroke-width="8" stroke-dasharray="3 1.6"/>
+      <g filter="url(#beamblur)">
+        <path d="M70 101 L-430 10 L-430 220 Z" fill="url(#rovbeam)" opacity=".5"/>
+        <path d="M72 150 L-380 150 L-380 310 Z" fill="url(#rovbeam)" opacity=".3"/>
+      </g>
+      <g fill="#fff3c4">
+        <circle class="speck" cx="20" cy="90" r="1.6" style="--sp:5s;--spd:-1s"/><circle class="speck" cx="-40" cy="110" r="1.2" style="--sp:6s;--spd:-3s"/>
+        <circle class="speck" cx="-120" cy="80" r="1.8" style="--sp:7s;--spd:-2s"/><circle class="speck" cx="-200" cy="120" r="1.3" style="--sp:5.5s;--spd:-4s"/>
+        <circle class="speck" cx="-60" cy="70" r="1" style="--sp:4.5s;--spd:-.5s"/><circle class="speck" cx="-260" cy="96" r="1.5" style="--sp:6.5s;--spd:-5s"/>
+        <circle class="speck" cx="-150" cy="140" r="1.1" style="--sp:5.2s;--spd:-2.5s"/><circle class="speck" cx="0" cy="130" r="1.4" style="--sp:4.8s;--spd:-3.5s"/>
+      </g>
+      <rect x="84" y="98" width="190" height="72" fill="#161c22"/>
+      <g fill="#2a323b"><rect x="252" y="110" width="36" height="22" rx="7"/><rect x="252" y="140" width="36" height="22" rx="7"/></g>
+      <g fill="#3c4650"><rect x="284" y="108" width="6" height="26" rx="2"/><rect x="284" y="138" width="6" height="26" rx="2"/></g>
+      <path d="M78 46 Q78 38 86 38 L266 38 Q276 38 276 48 L276 98 L78 98 Z" fill="#e9b44c"/>
+      <path d="M86 38 L266 38 Q276 38 276 48 L276 52 L78 52 L78 46 Q78 38 86 38 Z" fill="#f4cf72"/>
+      <rect x="78" y="86" width="198" height="12" fill="#c9952f"/>
+      <g fill="#13233a"><path d="M100 60 l8 0 l-8 14 l-8 0 Z M116 60 l8 0 l-8 14 l-8 0 Z M132 60 l8 0 l-8 14 l-8 0 Z"/></g>
+      <rect x="196" y="58" width="58" height="17" rx="3" fill="#13233a"/>
+      <text x="225" y="71" font-family="Jost, sans-serif" font-size="11" font-weight="700" fill="#e9b44c" text-anchor="middle" letter-spacing="2">ROV</text>
+      <ellipse cx="122" cy="38" rx="17" ry="4" fill="#2a323b"/><ellipse cx="236" cy="38" rx="17" ry="4" fill="#2a323b"/>
+      <path d="M84 98 V170 M274 98 V170 M84 134 H274 M140 98 V170 M222 98 V170" stroke="#2f3943" stroke-width="5"/>
+      <rect x="150" y="106" width="62" height="22" rx="11" fill="#c7ccd2"/><rect x="150" y="106" width="62" height="6" rx="3" fill="#e1e5e9"/>
+      <rect x="150" y="140" width="62" height="22" rx="11" fill="#aab1b8"/>
+      <path d="M80 178 H282 M96 170 V178 M264 170 V178" stroke="#2f3943" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="76" cy="124" r="17" fill="#13233a"/><circle cx="72" cy="122" r="8" fill="#2c4d63"/><circle cx="69.5" cy="119.5" r="2.6" fill="#f39a7c"/>
+      <rect x="62" y="94" width="18" height="11" rx="3" fill="#fff3c4"/><rect x="64" y="145" width="16" height="10" rx="3" fill="#fff3c4"/>
+      <g transform="translate(96 160)"><g class="arm1">
+        <path d="M0 0 L-24 12 L-42 6" stroke="#c7ccd2" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="0" cy="0" r="6" fill="#2f3943"/><circle cx="-24" cy="12" r="5" fill="#2f3943"/>
+        <path d="M-42 6 L-56 -2 M-42 6 L-58 10" stroke="#9aa3ab" stroke-width="3.5" stroke-linecap="round"/>
+      </g></g>
+      <circle class="led" cx="264" cy="46" r="3" fill="#7fe08a"/>
+    </svg>
+    <svg class="angler" viewBox="0 0 260 190" aria-hidden="true">
+      <defs>
+        <radialGradient id="anglow"><stop offset="0" stop-color="#fff3c4" stop-opacity=".9"/><stop offset=".25" stop-color="#ffe3a0" stop-opacity=".32"/><stop offset="1" stop-color="#ffe3a0" stop-opacity="0"/></radialGradient>
+        <linearGradient id="angbody" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1f1827"/><stop offset=".6" stop-color="#2e2438"/><stop offset="1" stop-color="#43344d"/></linearGradient>
+        <radialGradient id="anglit" cx="190" cy="56" r="80" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffcf94" stop-opacity=".28"/><stop offset="1" stop-color="#ffcf94" stop-opacity="0"/></radialGradient>
+        <linearGradient id="angmouth" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#14060a"/><stop offset="1" stop-color="#5a1822"/></linearGradient>
+      </defs>
+      <circle class="glow" cx="210" cy="10" r="74" fill="url(#anglow)"/>
+      <!-- tail -->
+      <path d="M46 104 L8 74 C15 92 15 116 8 136 Z" fill="#231c2b"/>
+      <path d="M44 104 L14 82 M44 104 L12 104 M44 104 L14 126" stroke="#3a2e45" stroke-width="1.2"/>
+      <!-- dorsal spines -->
+      <path d="M92 44 L96 26 L104 42 Z M114 38 L121 22 L127 37 Z" fill="#231c2b"/>
+      <!-- mouth -->
+      <path d="M182 100 L224 88 C229 98 231 110 230 120 Z" fill="url(#angmouth)"/>
+      <!-- body -->
+      <path d="M46 104 C42 70 68 44 112 38 C152 32 192 44 212 66 C219 74 223 83 224 88 L182 100 L190 156 C150 170 92 166 62 146 C52 136 47 120 46 104 Z" fill="url(#angbody)"/>
+      <path d="M46 104 C42 70 68 44 112 38 C152 32 192 44 212 66 C219 74 223 83 224 88 L182 100 L190 156 C150 170 92 166 62 146 C52 136 47 120 46 104 Z" fill="url(#anglit)"/>
+      <path d="M64 146 C94 164 150 168 188 156" stroke="#16111c" stroke-width="5" fill="none" opacity=".6"/>
+      <!-- light from the lure on the brow -->
+      <path d="M118 38 C156 33 192 44 212 66 C218 73 222 81 224 88" stroke="#f0a36f" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".7"/>
+      <!-- skin -->
+      <g fill="#4a3c56" opacity=".8">
+        <circle cx="84" cy="74" r="3.4"/><circle cx="104" cy="60" r="2.4"/><circle cx="130" cy="72" r="3"/><circle cx="72" cy="112" r="2.6"/>
+        <circle cx="100" cy="98" r="2.2"/><circle cx="150" cy="58" r="2"/><circle cx="160" cy="88" r="2.6"/><circle cx="118" cy="132" r="2"/>
+        <circle cx="88" cy="136" r="2.4"/><circle cx="140" cy="114" r="1.8"/><circle cx="62" cy="90" r="1.8"/><circle cx="176" cy="122" r="2"/>
+      </g>
+      <path d="M70 100 C100 92 140 90 172 96" stroke="#57476a" stroke-width="1.4" stroke-dasharray="1.5 5" fill="none" stroke-linecap="round"/>
+      <!-- pectoral fin -->
+      <path d="M118 118 C104 124 100 142 112 152 C120 146 126 132 126 120 Z" fill="#3a2d44"/>
+      <path d="M120 120 L108 146 M122 121 L115 149 M124 122 L121 148" stroke="#56456a" stroke-width="1"/>
+      <!-- upper teeth -->
+      <path d="M186.2 98.9 l3.2 0 l-1 7 Z M191.3 97.6 l3.2 0 l-1 11 Z M196.4 96.2 l3.2 0 l-1 8 Z M201.5 94.9 l3.2 0 l-1 13 Z M206.6 93.6 l3.2 0 l-1 9 Z M211.7 92.2 l3.2 0 l-1 12 Z M216.8 90.9 l3 0 l-1 7 Z" fill="#efe6d6"/>
+      <!-- lower jaw, opens now and then -->
+      <g transform="translate(182 100)"><g class="jaw">
+        <path d="M0 0 L46 18 C46 36 32 52 8 56 Z" fill="#3a2d44"/>
+        <path d="M0 0 L46 18" stroke="#5a4766" stroke-width="1.6"/>
+        <path d="M5 2 l3.6 0 l-.8 -8 Z M11 4.4 l3.6 0 l-.8 -12 Z M17 6.8 l3.6 0 l-.8 -9 Z M23 9.2 l3.6 0 l-.8 -15 Z M29 11.6 l3.6 0 l-.8 -11 Z M35 14 l3.6 0 l-.8 -14 Z M41 16.4 l3.2 0 l-.8 -9 Z" fill="#efe6d6"/>
+      </g></g>
+      <!-- eye -->
+      <circle cx="174" cy="70" r="6.4" fill="#1a141f"/><circle cx="174" cy="70" r="4.6" fill="#f2e8d6"/>
+      <circle cx="175.2" cy="70" r="2.5" fill="#13233a"/><circle cx="172.6" cy="68.4" r="1" fill="#fff"/>
+      <!-- the lure -->
+      <path d="M148 38 C152 14 178 -2 204 6" stroke="#2c2436" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+      <path d="M204 6 C206 7 207 8 208 9" stroke="#2c2436" stroke-width="2.4" fill="none"/>
+      <circle cx="210" cy="11" r="7.5" fill="#fff3c4"/><circle cx="208" cy="9" r="2.6" fill="#ffffff"/>
+      <path d="M210 18 C208 23 206 26 203 28 M210 18 C211 23 213 27 216 29 M210 18 L210 30" stroke="#fff3c4" stroke-width="1" fill="none" opacity=".8"/>
+    </svg>
+    <div class="wrap">
+      <div class="bg-head">
+        <div><p class="depth">Dybde 900 m</p>
+        <h2>Bakgrunn</h2></div>
+        <figure class="porthole"><img src="portrait.jpg" alt="Jonas Krogh Læret" width="360" height="360" loading="lazy"></figure>
+      </div>
+      <ul class="cv">
+        <li>
+          <span class="when">2024–2026</span>
+          <div><strong>CTO, Marine Hybrid Solutions</strong>
+            <p>Bygget den tekniske organisasjonen fra grunnen av. Skybasert plattform for fartøysdata, simulering og flåteoppfølging, nominert til <span class="nw">Nor-Fishing</span> Innovation Award 2026. Salg av komplette kraft- og fremdriftssystemer.</p></div>
+        </li>
+        <li>
+          <span class="when">2014–2024</span>
+          <div><strong>Kongsberg Maritime</strong>
+            <p>Prosjektingeniør og senere senioringeniør frem til 2020, med igangkjøring offshore. Deretter gruppeleder for over 20 ingeniører innen dynamisk posisjonering, med leveranser til fartøy over hele verden.</p></div>
+        </li>
+        <li>
+          <span class="when">2007–2014</span>
+          <div><strong>MSc Aerospace Engineering, TU Delft · Airbus</strong>
+            <p>Flyteknikk med vekt på designautomasjon og optimalisering. Masteroppgave hos Airbus Defence &amp; Space.</p></div>
+        </li>
+      </ul>
+    </div>
+    <svg class="seabed" viewBox="0 0 1600 240" preserveAspectRatio="xMaxYMax slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="ground" x1="0" y1="180" x2="0" y2="240" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0e2a38"/><stop offset="1" stop-color="#05141f"/></linearGradient>
+      </defs>
+      <path d="M0 240 L0 170 C140 150 260 176 420 162 C600 146 720 178 900 166 C1060 156 1180 140 1320 150 C1440 158 1520 146 1600 150 L1600 240 Z" fill="#0a202d"/>
+      <g id="lophelia"></g>
+      <g transform="translate(1196 100) rotate(-4)">
+        <path d="M0 20 L34 6 L254 6 L220 20 Z" fill="#b4553a"/>
+        <path d="M0 20 H220 V112 H0 Z" fill="#8c3a28"/>
+        <g fill="#7a3222"><rect x="12" y="26" width="6" height="80"/><rect x="30" y="26" width="6" height="80"/><rect x="48" y="26" width="6" height="80"/><rect x="66" y="26" width="6" height="80"/><rect x="84" y="26" width="6" height="80"/><rect x="102" y="26" width="6" height="80"/><rect x="120" y="26" width="6" height="80"/><rect x="138" y="26" width="6" height="80"/><rect x="156" y="26" width="6" height="80"/><rect x="174" y="26" width="6" height="80"/><rect x="192" y="26" width="6" height="80"/></g>
+        <g fill="#a84a33"><rect x="18" y="26" width="1.6" height="80"/><rect x="36" y="26" width="1.6" height="80"/><rect x="54" y="26" width="1.6" height="80"/><rect x="72" y="26" width="1.6" height="80"/><rect x="90" y="26" width="1.6" height="80"/><rect x="108" y="26" width="1.6" height="80"/><rect x="126" y="26" width="1.6" height="80"/><rect x="144" y="26" width="1.6" height="80"/><rect x="162" y="26" width="1.6" height="80"/><rect x="180" y="26" width="1.6" height="80"/><rect x="198" y="26" width="1.6" height="80"/></g>
+        <path d="M0 20 H220 V26 H0 Z M0 106 H220 V112 H0 Z" fill="#6d2d1e"/>
+        <path d="M0 20 H6 V112 H0 Z M214 20 H220 V112 H214 Z" fill="#6d2d1e"/>
+        <g fill="#3a1810"><rect x="0" y="20" width="8" height="6"/><rect x="212" y="20" width="8" height="6"/><rect x="0" y="106" width="8" height="6"/><rect x="212" y="106" width="8" height="6"/></g>
+        <path d="M220 20 L237 13 L237 105 L220 112 Z" fill="#a8462f"/>
+        <path d="M237 13 L254 6 L254 98 L237 105 Z" fill="#12090a"/>
+        <g class="octo-eye">
+          <ellipse cx="246" cy="74" rx="8" ry="11" fill="#d35c44"/>
+          <ellipse cx="243" cy="70" rx="2.6" ry="2.4" fill="#f4e9d4"/><rect x="241.6" y="69.4" width="2.8" height="1.2" fill="#13233a"/>
+          <ellipse cx="249.5" cy="69" rx="2.6" ry="2.4" fill="#f4e9d4"/><rect x="248.1" y="68.4" width="2.8" height="1.2" fill="#13233a"/>
+        </g>
+        <path d="M254 6 L272 13 L272 106 L254 98 Z" fill="#b4553a"/>
+        <path d="M226 17.5 V109.5 M232 15 V107 M260 8.5 V100.5 M266 11 V103" stroke="#6d2d1e" stroke-width="1.6"/>
+        <g fill="#3a1810"><rect x="224.5" y="58" width="3" height="7"/><rect x="230.5" y="56" width="3" height="7"/><rect x="258.5" y="52" width="3" height="7"/><rect x="264.5" y="54" width="3" height="7"/></g>
+        <path class="tentacle" d="M248 96 C258 106 274 108 284 100 C290 94 288 86 281 87" stroke="#d35c44" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <g fill="#6a2a1b" opacity=".8"><path d="M40 40 C52 34 62 44 56 54 C48 60 36 52 40 40 Z"/><path d="M150 70 C164 64 176 76 168 86 C158 92 146 82 150 70 Z"/><path d="M96 30 C104 28 108 34 104 38 C98 40 94 36 96 30 Z"/></g>
+        <g fill="#c06a3c" opacity=".55"><path d="M120 46 C130 44 134 52 128 56 C122 58 118 52 120 46 Z"/><path d="M190 36 C196 34 200 40 196 44 C190 46 186 42 190 36 Z"/></g>
+        <g fill="#2f5a4a"><path d="M40 6 C44 -2 50 -2 48 8 Z M120 4 C126 -6 132 -4 128 6 Z M180 4 C184 -4 190 -2 186 6 Z"/></g>
+        <g fill="#e9dcc4" opacity=".8"><circle cx="20" cy="104" r="2"/><circle cx="25" cy="101" r="1.6"/><circle cx="130" cy="104" r="2.2"/><circle cx="136" cy="102" r="1.5"/><circle cx="200" cy="100" r="1.8"/></g>
+      </g>
+      <path d="M0 240 L0 196 C160 184 300 204 480 194 C660 184 800 206 980 198 C1100 192 1170 202 1190 206 C1240 196 1300 200 1340 204 C1400 200 1480 204 1520 206 C1560 196 1580 190 1600 190 L1600 240 Z" fill="url(#ground)"/>
+      <g stroke="#173b4b" stroke-width="2" fill="none" stroke-linecap="round" opacity=".7">
+        <path d="M120 214 C140 210 160 210 180 214"/><path d="M300 220 C326 215 352 215 378 220"/><path d="M560 210 C580 206 600 206 620 210"/><path d="M820 216 C846 212 872 212 898 216"/><path d="M1020 212 C1040 208 1060 208 1080 212"/><path d="M1480 216 C1500 212 1520 212 1540 216"/>
+      </g>
+      <g id="seapens"></g>
+    </svg>
+  </section>
+</main>
+
+<!-- ============ POLYPS ============ -->
+<section class="polyps" aria-hidden="true">
+  <div class="polyps-stage"><canvas id="polyp-canvas"></canvas></div>
+</section>
+
+<!-- ============ SHORE ============ -->
+<section class="shore" id="kontakt">
+  <div class="wrap">
+    <p class="depth">Klart vann</p>
+    <h2>Start med en <span class="nw">AI-kartlegging</span></h2>
+    <p class="lead">Rundt tre uker, fast pris. Dere får vite hvor dere står med data og AI, også om dere allerede er i gang, og en prioritert plan med gevinster dere kan starte på med en gang. Ta kontakt, så tar vi en uforpliktende prat først.</p>
+    <div class="actions">
+      <a class="btn primary" href="mailto:jonas@laeret.net?subject=AI-kartlegging">Send meg en e-post</a>
+      <a class="btn secondary" href="tel:+4791871632">+47 918 71 632</a>
+    </div>
+    <footer>
+      <p>Jonas Krogh Læret · <a href="mailto:jonas@laeret.net">jonas@laeret.net</a></p>
+      <p>Basert i Oslo, tar oppdrag langs hele kysten.</p>
+    </footer>
+  </div>
+</section>
+
+<script>
+(() => {
+  const NS = 'http://www.w3.org/2000/svg';
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rand = (a, b) => a + Math.random() * (b - a);
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const $ = (s) => document.querySelector(s);
+  const mk = (parent, html, tf) => {
+    const g = document.createElementNS(NS, 'g');
+    g.innerHTML = html;
+    if (tf) g.setAttribute('transform', tf);
+    parent.appendChild(g);
+    return g;
+  };
+
+  /* ---------- Scene framing: keep the sea in view on any screen ---------- */
+  const scene = $('#scene'), hero = $('.hero');
+  const vb = { x: 0, y: 0, w: 1600, h: 900 };
+  function frame() {
+    const a = hero.clientWidth / hero.clientHeight;
+    if (a >= 1600 / 900) { vb.w = 1600; vb.h = 1600 / a; vb.x = 0; }
+    else { vb.w = Math.max(740, 900 * a); vb.h = vb.w / a; vb.x = clamp(870 - vb.w / 2, 0, 1600 - vb.w); }
+    vb.y = 900 - vb.h;
+    scene.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+    scene.setAttribute('preserveAspectRatio', 'xMidYMax meet');
+  }
+  frame();
+  addEventListener('resize', frame);
+
+  /* ---------- Waves ---------- */
+  function wavePath(y0, amp, wl, bottom = 1000, x0 = -400, x1 = 2400) {
+    let d = `M${x0} ${bottom} L${x0} ${y0}`;
+    for (let x = x0; x <= x1; x += 10) d += ` L${x} ${(y0 + amp * Math.sin((x / wl) * Math.PI * 2)).toFixed(1)}`;
+    return d + ` L${x1} ${bottom} Z`;
+  }
+  [['#band1', 604, 1.5, 90, '#4a8191', 26, 1.5],
+   ['#band2', 652, 3, 150, '#336f84', 20, 2.5],
+   ['#band3', 722, 5, 220, '#2a6479', 16, 3.5],
+   ['#band4', 808, 7, 300, '#20556c', 13, 4.5]].forEach(([id, y, amp, wl, col, dur, ba]) => {
+    $(id).innerHTML = `<g class="bob" style="--bdur:${(dur / 4).toFixed(1)}s;--ba:${ba}px"><path class="band" style="--dur:${dur}s;--wl:-${wl}px" fill="${col}" d="${wavePath(y, amp, wl)}"/></g>`;
+  });
+
+  // sun glitter on the water
+  const gls = ['', '', '', '', ''], glBand = (y) => y < 606 ? 0 : y < 654 ? 1 : y < 724 ? 2 : y < 810 ? 3 : 4;
+  for (let i = 0; i < 22; i++) {
+    const k = i / 21, y = 566 + k * k * 300, spread = 14 + k * 110;
+    for (let j = 0, m = 1 + Math.floor(rand(0, 2.6)); j < m; j++) {
+      const w = (6 + k * 34) * rand(.5, 1.3), x = 900 + rand(-spread, spread) - w / 2;
+      const gy = y + rand(-3, 3), a = (1 + k * 2.2) * (Math.random() < .5 ? 1 : -1);
+      gls[glBand(gy)] += `<path class="glint" d="M${x.toFixed(1)} ${gy.toFixed(1)} q${(w / 4).toFixed(1)} ${(-a).toFixed(1)} ${(w / 2).toFixed(1)} 0 t${(w / 2).toFixed(1)} 0" fill="none" stroke="#f6c29a" stroke-width="${(1.4 + k * 2.4).toFixed(1)}" stroke-linecap="round" style="--gd:${rand(2, 5).toFixed(1)}s;animation-delay:-${rand(0, 5).toFixed(1)}s"/>`;
+    }
+  }
+  gls.forEach((s, i) => { $('#gl' + i).innerHTML = s; });
+
+  // cumulus: three poster tones, flat sunlit base
+  function cumulus(x, y, w, cd, cx) {
+    const n = Math.max(5, Math.round(w / 34)), lobes = [];
+    for (let i = 0; i < n; i++) {
+      const f = (i + .5) / n, bump = Math.sin(f * Math.PI);
+      lobes.push([x + f * w + rand(-4, 4), y - bump * w * .1 - rand(0, w * .03), w * (.1 + bump * .12) * rand(.9, 1.12), bump]);
+    }
+    const id = `cl${Math.round(x)}_${Math.round(y)}`;
+    const ring = (dx, dy, k, min = 0) => lobes.filter(l => l[3] >= min).map(([lx, ly, r]) => `<circle cx="${(lx + dx).toFixed(1)}" cy="${(ly + dy).toFixed(1)}" r="${(r * k).toFixed(1)}"/>`).join('');
+    return `<g class="cloud" style="--cd:${cd}s;--cx:${cx}px">
+      <clipPath id="${id}"><rect x="${x - 40}" y="${y - w}" width="${w + 80}" height="${w}"/></clipPath>
+      <g clip-path="url(#${id})">
+        <g fill="#efbb96">${ring(0, 0, 1)}</g>
+        <g fill="#f8e3cb">${ring(-w * .01, -w * .03, .88, .2)}</g>
+        <g fill="#fdf6ec">${ring(-w * .022, -w * .055, .7, .55)}</g>
+      </g>
+      <path d="M${(x + w * .05).toFixed(1)} ${y} Q${(x + w * .03).toFixed(1)} ${(y - w * .05).toFixed(1)} ${(x + w * .12).toFixed(1)} ${(y - w * .045).toFixed(1)} L${(x + w * .88).toFixed(1)} ${(y - w * .045).toFixed(1)} Q${(x + w * .97).toFixed(1)} ${(y - w * .05).toFixed(1)} ${(x + w * .95).toFixed(1)} ${y} Z" fill="#eaa684"/>
+      <path d="M${(x + w * .1).toFixed(1)} ${(y - w * .045).toFixed(1)} L${(x + w * .9).toFixed(1)} ${(y - w * .045).toFixed(1)}" stroke="#f3c2a0" stroke-width="1.5" opacity=".8"/>
+      <rect x="${(x + w * .09).toFixed(1)}" y="${(y - 1.5).toFixed(1)}" width="${(w * .82).toFixed(1)}" height="3" rx="1.5" fill="#f7b48e"/>
+    </g>`;
+  }
+  $('#clouds').innerHTML = cumulus(600, 168, 300, 140, -220) + cumulus(1120, 276, 380, 170, 180) + cumulus(1040, -96, 340, 200, 160) + cumulus(560, -330, 240, 180, -140)
+    + cumulus(640, 392, 150, 120, -160) + cumulus(1250, 448, 130, 160, 120) + cumulus(1080, -500, 180, 150, -150);
+
+  /* ---------- Shapes (bow to the left, waterline at y=0) ---------- */
+  const WAKE = '<path d="M134 -1 L280 -1 M146 3 L240 3 M170 6 L215 6" stroke="#f4e9d4" stroke-width="2" stroke-linecap="round" opacity=".45"/><path d="M-150 -1 C-158 -4 -164 -2 -170 0" stroke="#f4e9d4" stroke-width="2.5" fill="none" opacity=".6"/>';
+  const SHIPS = {
+    coaster: { len: 300, html: `
+      <path d="M-160 -34 L-126 -34 L-122 -26 L142 -26 L138 -3 Q137 0 133 0 L-136 0 Q-140 0 -141 -3 Z" fill="#1d2f45"/>
+      <path d="M-160 -34 L-126 -34 L-122 -26 L142 -26 L141.6 -23.5 L-121 -23.5 L-125 -31.5 L-159.6 -31.5 Z" fill="#33506d"/>
+      <path d="M-141 -6 L137.6 -6 L137 -3 Q136 -1 133 -1 L-136 -1 Q-139 -1 -140 -3 Z" fill="#c24a35"/>
+      <path d="M-139.5 -2 L136.8 -2 Q136 0 133 0 L-136 0 Q-139 0 -139.5 -2 Z" fill="#932f22"/>
+      <circle cx="-146" cy="-26" r="2.2" fill="#33506d"/>
+      <path d="M-158 -40 L-126 -40 M-158 -40 V-34 M-148 -40 V-34 M-138 -40 V-34" stroke="#1d2f45" stroke-width="1"/>
+      <g fill="#6f8f9c"><rect x="-118" y="-34" width="50" height="8"/><rect x="-64" y="-34" width="50" height="8"/><rect x="-10" y="-34" width="50" height="8"/></g>
+      <g fill="#93b2bd"><rect x="-118" y="-34" width="50" height="2.5"/><rect x="-64" y="-34" width="50" height="2.5"/><rect x="-10" y="-34" width="50" height="2.5"/></g>
+      <rect x="-47" y="-74" width="6" height="40" fill="#e9b44c"/><rect x="-44" y="-74" width="3" height="40" fill="#c9952f"/>
+      <path d="M-44 -70 L-104 -55" stroke="#e9b44c" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M-104 -55 V-38" stroke="#1d2f45" stroke-width="1"/><rect x="-107" y="-38" width="6" height="4" fill="#1d2f45"/>
+      <line x1="-150" y1="-34" x2="-150" y2="-60" stroke="#1d2f45" stroke-width="2.2"/>
+      <rect x="62" y="-58" width="76" height="32" fill="#f3ead8"/><rect x="118" y="-58" width="20" height="32" fill="#dccfb6"/>
+      <rect x="68" y="-78" width="64" height="20" fill="#f3ead8"/><rect x="118" y="-78" width="14" height="20" fill="#dccfb6"/>
+      <rect x="54" y="-82" width="86" height="5" fill="#f3ead8"/>
+      <path d="M58 -74.5 L136 -74.5" stroke="#1d2f45" stroke-width="4.5" stroke-dasharray="7 2.5"/>
+      <path d="M68 -48 L132 -48 M68 -38 L132 -38" stroke="#1d2f45" stroke-width="3" stroke-dasharray="4 5" opacity=".75"/>
+      <rect x="120" y="-44" width="16" height="6" rx="3" fill="#e9873b"/>
+      <path d="M90 -82 V-102" stroke="#1d2f45" stroke-width="1.6"/><circle cx="90" cy="-103" r="1.8" fill="#fff3c4"/>
+      <path d="M106 -106 L126 -106 L124 -82 L108 -82 Z" fill="#e0624a"/><path d="M116 -106 L126 -106 L124 -82 L116 -82 Z" fill="#b8462f"/>
+      <rect x="105" y="-110" width="22" height="5" fill="#1d2f45"/>` },
+    ferry: { len: 260, html: `
+      <path d="M-134 -26 L122 -26 L116 -3 Q114 0 110 0 L-108 0 Q-112 0 -114 -3 Z" fill="#1d2f45"/>
+      <path d="M-134 -26 L122 -26 L121.4 -23.5 L-133 -23.5 Z" fill="#33506d"/>
+      <path d="M-113 -6 L117 -6 L116 -3 Q114 0 110 0 L-108 0 Q-112 0 -113.5 -3 Z" fill="#c24a35"/>
+      <rect x="-104" y="-50" width="210" height="24" fill="#f6f0e4"/><rect x="84" y="-50" width="22" height="24" fill="#e2d8c6"/>
+      <rect x="-80" y="-70" width="164" height="20" fill="#f6f0e4"/><rect x="66" y="-70" width="18" height="20" fill="#e2d8c6"/>
+      <path d="M-92 -70 L-80 -86 L-30 -86 L-30 -70 Z" fill="#f6f0e4"/>
+      <path d="M-98 -40 L100 -40" stroke="#1d2f45" stroke-width="5" stroke-dasharray="8 4"/>
+      <path d="M-74 -61 L80 -61" stroke="#1d2f45" stroke-width="4" stroke-dasharray="6 4"/>
+      <path d="M-86 -78 L-32 -78" stroke="#1d2f45" stroke-width="4.5"/>
+      <rect x="-70" y="-56" width="18" height="6" rx="3" fill="#e9873b"/><rect x="-20" y="-56" width="18" height="6" rx="3" fill="#e9873b"/><rect x="30" y="-56" width="18" height="6" rx="3" fill="#e9873b"/>
+      <path d="M-58 -86 V-106" stroke="#1d2f45" stroke-width="1.6"/><circle cx="-58" cy="-107" r="1.8" fill="#fff3c4"/>
+      <path d="M34 -98 L58 -98 L56 -70 L36 -70 Z" fill="#c24a35"/><path d="M46 -98 L58 -98 L56 -70 L46 -70 Z" fill="#9a3626"/>
+      <rect x="33" y="-102" width="26" height="5" fill="#1d2f45"/>` },
+    sail: { len: 96, html: `
+      <path d="M-46 -10 L44 -10 L36 -1 Q34 0 31 0 L-32 0 Q-35 0 -37 -2 Z" fill="#f3ead8"/>
+      <path d="M-39 -3.5 L38.6 -3.5 L36 -1 Q34 0 31 0 L-32 0 Q-35 0 -37 -2 Z" fill="#dccfb6"/>
+      <path d="M-46 -10 L44 -10 L43 -7.5 L-44 -7.5 Z" fill="#1d2f45"/>
+      <line x1="6" y1="-10" x2="6" y2="-118" stroke="#1d2f45" stroke-width="2"/>
+      <path d="M9 -114 C22 -84 36 -44 48 -16 L9 -16 Z" fill="#f7efe0"/>
+      <path d="M9 -114 C15 -88 21 -56 25 -16 L9 -16 Z" fill="#e8dcc6"/>
+      <path d="M3 -108 C-10 -78 -26 -42 -42 -14 L3 -14 Z" fill="#e0624a"/>
+      <path d="M3 -108 C-3 -78 -9 -42 -13 -14 L3 -14 Z" fill="#c24a35"/>
+      <circle cx="26" cy="-14" r="3.2" fill="#1d2f45"/>` },
+  };
+  // gull wing: arm hinged at the shoulder, hand hinged at the wrist (-6,-20)
+  const WING = (arm, hand) => `
+    <g class="arm"><path d="M5 1 C4 -8 1 -15 -2 -21 L-10 -19 C-8 -12 -6 -5 -6 1 Z" fill="${arm}"/><path d="M5 1 C4 -8 1 -15 -2 -21 L-4 -20.6 C-2 -14 0 -7 1 1 Z" fill="#fff" opacity=".35"/></g>
+    <g class="hand">
+      <path d="M4 -1 C-4 -6 -14 -11 -28 -13 C-20 -7 -11 -2 -5 3 Z" fill="${hand}"/>
+      <path d="M-15 -8.6 C-19.5 -10.8 -23.5 -12.3 -28 -13 C-24 -9.6 -20 -6.8 -16.6 -5.2 Z" fill="#13233a"/>
+      <circle cx="-23" cy="-10.9" r=".95" fill="#fff"/>
+      <path d="M4 -1 C-2 -4.6 -8 -7.6 -14 -9.6" stroke="#fff" stroke-width=".8" fill="none" opacity=".4"/>
+    </g>`;
+  const GULL = `
+    <g class="wf" transform="translate(-4 -5)">${WING('#a3abb5', '#98a0ab')}</g>
+    <path d="M-14 -1 L-28 -5.5 C-29.2 -2.5 -29.2 1 -28 3.5 L-14 2 Z" fill="#ece8e0"/>
+    <path d="M-18 0 C-12 -7 2 -9 12 -7.4 C17 -6.4 20 -3.4 20 0 C20 3 16 5 10 5.2 C0 7 -12 5.4 -18 0 Z" fill="#fbf8f2"/>
+    <path d="M-14 2.4 C-4 6 8 6 16 3.2 C10 6.4 -4 7.4 -14 2.4 Z" fill="#e4dfd5"/>
+    <path d="M-16 -2 C-10 -6 0 -7.6 8 -7.1 C2 -4.2 -8 -2.6 -16 -2 Z" fill="#c3c9d1"/>
+    <path d="M-6 4.6 L-10.5 7.6 L-8.4 8 L-4 5.4 Z" fill="#e9a38a"/>
+    <circle cx="15" cy="-6.2" r="5.8" fill="#fbf8f2"/>
+    <circle cx="17.2" cy="-7.2" r="1.7" fill="#e9b44c"/><circle cx="17.2" cy="-7.2" r="1.05" fill="#13233a"/>
+    <path d="M19.6 -6.8 L28.4 -5.2 C29 -4.4 28.4 -3.4 27.2 -3.2 L19.6 -3.6 Z" fill="#f0c04f"/>
+    <circle cx="25.9" cy="-3.7" r=".95" fill="#d0452f"/>
+    <g class="cargo"></g>
+    <g class="wn" transform="translate(-1 -4)">${WING('#e3e6ea', '#d8dce1')}</g>`;
+  const SAUSAGE = '<rect x="-10" y="-3.5" width="20" height="7" rx="3.5" fill="#c0653f"/>';
+  const FLYFISH = `
+    <path d="M-12 0 L-22 -6 L-18 0 L-22 6 Z" fill="#7d9fb4"/>
+    <ellipse cx="0" cy="0" rx="14" ry="3.6" fill="#a9c2d1"/>
+    <path d="M-2 -1 L-14 -17 L7 -2 Z" fill="#e3edf2"/>
+    <circle cx="9" cy="-1" r="1.1" fill="#13233a"/>`;
+  const TAIL = '<path d="M0 6 C-1 -10 -4 -20 -22 -30 C-12 -33 -4 -29 0 -21 C4 -29 12 -33 22 -30 C4 -20 1 -10 0 6 Z" fill="#34485c"/>';
+  const CATCH = {
+    boot: '<path d="M-5 0 L5 0 L5 16 L14 19 L14 25 L-5 25 Z" fill="#2f3d33"/><path d="M-5 25 L14 25 L14 27 L-5 27 Z" fill="#1b241e"/>',
+    fish: '<g transform="rotate(90)"><ellipse cx="12" cy="0" rx="12" ry="4.5" fill="#c9d6dc"/><path d="M23 0 L31 -5 L31 5 Z" fill="#a9bcc5"/><circle cx="5" cy="-1" r="1.2" fill="#13233a"/></g>',
+    duck: '<ellipse cx="0" cy="14" rx="10" ry="7" fill="#f2c94c"/><circle cx="6" cy="5" r="5" fill="#f2c94c"/><path d="M10 5 L16 6.5 L10 8 Z" fill="#e0624a"/><circle cx="7" cy="4" r="1" fill="#13233a"/>',
+  };
+
+  /* ---------- Actors ---------- */
+  const actors = [];
+  const layers = { far: $('#lane-far'), mid: $('#lane-mid'), sink: $('#sink'), fx: $('#fx') };
+  const LANES = { far: { y: 603, s: .42, v: 9 }, mid: { y: 655, s: .82, v: 18 } };
+
+  function splash(x, y, s = 1) {
+    let html = '<ellipse class="ring" cx="0" cy="0" rx="4" ry="1" fill="none" stroke="#f4e9d4" stroke-width="2"/>';
+    const drops = [];
+    for (let i = 0; i < 6; i++) { html += `<circle r="${rand(1.2, 2.4).toFixed(1)}" fill="#f4e9d4"/>`; drops.push({ vx: rand(-45, 45), vy: rand(-140, -80) }); }
+    const g = mk(layers.fx, html, `translate(${x} ${y}) scale(${s})`);
+    const ring = g.querySelector('.ring'), dots = [...g.querySelectorAll('circle')];
+    let t = 0;
+    actors.push({ g, update(dt) {
+      t += dt;
+      ring.setAttribute('rx', 4 + t * 34); ring.setAttribute('ry', 1 + t * 8);
+      ring.setAttribute('opacity', clamp(1 - t / 1.3));
+      dots.forEach((c, i) => { const d = drops[i]; c.setAttribute('cx', d.vx * t); c.setAttribute('cy', Math.min(0, d.vy * t + 160 * t * t)); c.setAttribute('opacity', clamp(1 - t)); });
+      return t < 1.4;
+    } });
+  }
+
+  function ship(type, laneKey, dir, x) {
+    const L = LANES[laneKey], S = SHIPS[type];
+    const s = L.s * (type === 'sail' ? 1.1 : 1);
+    const v = L.v * (type === 'sail' ? .6 : type === 'ferry' ? 1.5 : 1);
+    const g = mk(layers[laneKey], `<g transform="scale(${-dir} 1)">${WAKE}${S.html}</g>`);
+    if (x === undefined) x = dir < 0 ? vb.x + vb.w + S.len * s : vb.x - S.len * s;
+    const ph = rand(0, 6);
+    let t = 0;
+    actors.push({ g, ship: true, update(dt) {
+      t += dt; x += dir * v * dt;
+      const bob = Math.sin(t * 1.1 + ph) * 1.4 * s, rot = Math.sin(t * .8 + ph) * .9;
+      g.setAttribute('transform', `translate(${x.toFixed(1)} ${(L.y + bob).toFixed(2)}) rotate(${rot.toFixed(2)}) scale(${s})`);
+      return dir < 0 ? x > vb.x - 400 : x < vb.x + vb.w + 400;
+    } });
+  }
+
+  function say(x, y, text) {
+    const g = mk(layers.fx, `<text font-family="Jost, sans-serif" font-weight="700" font-size="20" fill="#13233a" text-anchor="middle">${text}</text>`);
+    let t = 0;
+    actors.push({ g, update(dt) {
+      t += dt;
+      g.setAttribute('transform', `translate(${x.toFixed(1)} ${(y - t * 8).toFixed(1)})`);
+      g.setAttribute('opacity', clamp(t < 1.6 ? 1 : 1 - (t - 1.6) / .5));
+      return t < 2.1;
+    } });
+  }
+
+  function falling(x, y, vx, html, sea, s, layer = layers.fx) {
+    const g = mk(layer, html);
+    let vy = -30, r = 0;
+    actors.push({ g, update(dt) {
+      vy += 260 * dt; x += vx * dt; y += vy * dt; r += 260 * dt;
+      g.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${r.toFixed(0)}) scale(${s})`);
+      if (y >= sea) { if (layer === layers.fx) splash(x, sea, .8); return false; }
+      if (layer !== layers.fx && !this.splashed && y > sea - 22) { this.splashed = true; splash(x, sea - 20, .7); }
+      return true;
+    } });
+  }
+
+  function gull(withSausage) {
+    const dir = Math.random() < .5 ? 1 : -1;
+    const g = mk(layers.fx, GULL);
+    const cargo = g.querySelector('.cargo');
+    const wings = ['.wf', '.wn'].map((c, i) => ({ arm: g.querySelector(`${c} .arm`), hand: g.querySelector(`${c} .hand`), lag: i ? 0 : .18, amp: i ? 1 : .85 }));
+    const y0 = rand(Math.max(vb.y + 70, -400), 470), v = rand(85, 115), s = rand(1, 1.35);
+    let x = dir > 0 ? vb.x - 60 : vb.x + vb.w + 60, t = 0, carrying = withSausage;
+    const dropAt = vb.x + vb.w * rand(.35, .65);
+    if (carrying) cargo.innerHTML = `<g transform="translate(29 -3) rotate(12)">${SAUSAGE}</g>`;
+    actors.push({ g, update(dt) {
+      t += dt; x += dir * v * dt;
+      const y = y0 + Math.sin(t * .9) * 14;
+      const gliding = Math.sin(t * .45) < -.35;
+      for (const w of wings) {
+        const ph = t * 8.5 - w.lag;
+        const s1 = gliding ? .5 : Math.cos(ph) * w.amp, s2 = gliding ? .42 : Math.cos(ph - .75) * w.amp, bend = gliding ? 4 : Math.sin(ph) * 13;
+        w.arm.setAttribute('transform', `scale(1 ${s1.toFixed(3)})`);
+        w.hand.setAttribute('transform', `translate(-6 ${(-20 * s1).toFixed(2)}) rotate(${bend.toFixed(1)}) scale(1 ${s2.toFixed(3)})`);
+      }
+      g.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${dir * s} ${s})`);
+      if (carrying && (dir > 0 ? x > dropAt : x < dropAt)) {
+        carrying = false; cargo.innerHTML = '';
+        falling(x + dir * 25 * s, y, dir * v * .7, SAUSAGE, 690, 1);
+        say(x, y - 30, '?!');
+      }
+      return dir > 0 ? x < vb.x + vb.w + 80 : x > vb.x - 80;
+    } });
+  }
+
+  function flyingFish() {
+    const dir = Math.random() < .5 ? 1 : -1, sea = 700;
+    let x = vb.x + vb.w * rand(.25, .7);
+    const g = mk(layers.fx, FLYFISH);
+    const hops = [[1, 150, 70], [.9, 120, 48], [.75, 90, 30]];
+    let i = 0, t = 0;
+    splash(x, sea, .6);
+    actors.push({ g, update(dt) {
+      t += dt;
+      const [dur, dist, h] = hops[i], k = Math.min(1, t / dur);
+      const px = x + dir * dist * k, py = sea - 4 * h * k * (1 - k);
+      const ang = Math.atan2(-4 * h * (1 - 2 * k), dist) * 180 / Math.PI;
+      g.setAttribute('transform', `translate(${px.toFixed(1)} ${py.toFixed(1)}) scale(${dir} 1) rotate(${ang.toFixed(0)})`);
+      if (k >= 1) {
+        x = px; t = 0; i++;
+        splash(x, sea, .5);
+        if (i >= hops.length) return false;
+      }
+      return true;
+    } });
+  }
+
+  function whale() {
+    const x = vb.x + vb.w * rand(.15, .85), y = 600, s = .55;
+    const g = mk(layers.far, `<g class="spout"></g><g class="tail">${TAIL}</g>`);
+    const tail = g.querySelector('.tail'), spout = g.querySelector('.spout');
+    spout.innerHTML = Array.from({ length: 7 }, () => '<circle r="2.4" fill="#f4e9d4"/>').join('');
+    const dots = [...spout.children], drops = dots.map(() => ({ vx: rand(-14, 14), vy: rand(-90, -60) }));
+    g.setAttribute('transform', `translate(${x} ${y}) scale(${s})`);
+    let t = 0, splashed = false;
+    actors.push({ g, update(dt) {
+      t += dt;
+      dots.forEach((c, i) => {
+        const tt = clamp(t - i * .06, 0, 1.4), d = drops[i];
+        c.setAttribute('cx', d.vx * tt); c.setAttribute('cy', d.vy * tt + 45 * tt * tt);
+        c.setAttribute('opacity', tt > 0 && tt < 1.4 ? clamp(1 - tt / 1.4) : 0);
+      });
+      let ty = 44;
+      if (t > 2.5 && t < 4.5) ty = 44 * (1 - (t - 2.5) / 2);
+      else if (t >= 4.5 && t < 6.5) ty = 0;
+      else if (t >= 6.5) ty = 44 * clamp((t - 6.5) / 1.6);
+      tail.setAttribute('transform', `translate(0 ${ty.toFixed(1)}) rotate(${(Math.sin(t * .8) * 4).toFixed(1)})`);
+      if (t > 8.1 && !splashed) { splashed = true; splash(x, y + 2, .45); }
+      return t < 8.5;
+    } });
+  }
+
+  function duckAdrift(x) {
+    const g = mk(layers.fx, CATCH.duck);
+    let t = 0;
+    actors.push({ g, update(dt) {
+      t += dt; x -= 7 * dt;
+      g.setAttribute('transform', `translate(${x.toFixed(1)} ${(700 + Math.sin(t * 1.6) * 2).toFixed(1)}) rotate(${(Math.sin(t * 1.3) * 6).toFixed(1)}) scale(.9)`);
+      g.setAttribute('opacity', clamp((45 - t) / 4));
+      return t < 45;
+    } });
+  }
+
+  /* ---------- Fisherman ---------- */
+  const FX = 1130, FY = 726;
+  const fisher = { bob: $('#fisher-bob'), rod: $('#rod'), line: $('#fline'), item: $('#fitem'), say: $('#fsay'), state: 'idle', t: 0, next: rand(10, 16), kind: 'boot' };
+  const PIVOT = [0, -30], TIP = [-60, -74];
+  function rodTip(a) {
+    const r = a * Math.PI / 180, dx = TIP[0] - PIVOT[0], dy = TIP[1] - PIVOT[1];
+    return [PIVOT[0] + dx * Math.cos(r) - dy * Math.sin(r), PIVOT[1] + dx * Math.sin(r) + dy * Math.cos(r)];
+  }
+  const kinds = ['boot', 'fish', 'duck', 'boot', 'fish'];
+  let kindIx = 0;
+  function updateFisher(dt, T) {
+    const f = fisher;
+    f.bob.setAttribute('transform', `translate(0 ${(Math.sin(T * 1.2) * 2).toFixed(2)}) rotate(${(Math.sin(T * .9) * 2).toFixed(2)})`);
+    f.t += dt;
+    let ang = Math.sin(T * .7) * 1.5, itemX = null, itemY = null;
+    if (f.state === 'idle' && f.t > f.next) {
+      f.state = 'bite'; f.t = 0; f.kind = kinds[kindIx++ % kinds.length];
+      f.say.textContent = '!';
+    }
+    if (f.state === 'bite') {
+      ang = -10 + Math.sin(f.t * 22) * 5;
+      f.say.setAttribute('opacity', clamp(1 - f.t / 1.2).toFixed(2));
+      if (f.t > 1.3) { f.state = 'reel'; f.t = 0; f.item.setAttribute('transform', 'translate(-62 12)'); f.item.innerHTML = CATCH[f.kind]; }
+    } else if (f.state === 'reel') {
+      ang = -12 + f.t * 6;
+      const tip = rodTip(ang);
+      itemX = tip[0]; itemY = 6 + (tip[1] + 22 - 6) * clamp(f.t / 2.2);
+      if (f.t > 2.2) { f.state = 'look'; f.t = 0; f.say.textContent = f.kind === 'boot' ? 'Hmpf.' : f.kind === 'duck' ? '…?' : 'Ja!'; }
+    } else if (f.state === 'look') {
+      ang = 1;
+      const tip = rodTip(ang);
+      itemX = tip[0] + Math.sin(f.t * 3) * 3; itemY = tip[1] + 22;
+      f.say.setAttribute('opacity', clamp(f.t < 1.6 ? 1 : 1 - (f.t - 1.6) / .4).toFixed(2));
+      if (f.t > 2.2) {
+        const px = FX + itemX, py = FY + itemY;
+        f.item.innerHTML = ''; f.state = 'idle'; f.t = 0; f.next = rand(26, 45);
+        if (f.kind === 'boot') falling(px, py, -60, CATCH.boot, 744, 1, layers.sink);
+        else if (f.kind === 'duck') { splash(px - 10, 712, .5); duckAdrift(px - 10); }
+      }
+    }
+    const tip = rodTip(ang);
+    f.rod.setAttribute('transform', `rotate(${ang.toFixed(2)} ${PIVOT[0]} ${PIVOT[1]})`);
+    f.line.setAttribute('x1', tip[0].toFixed(1)); f.line.setAttribute('y1', tip[1].toFixed(1));
+    if (itemY !== null) {
+      f.line.setAttribute('x2', itemX.toFixed(1)); f.line.setAttribute('y2', itemY.toFixed(1));
+      f.item.setAttribute('transform', `translate(${itemX.toFixed(1)} ${itemY.toFixed(1)}) rotate(${(Math.sin(T * 2.4) * 8).toFixed(1)})`);
+    } else {
+      f.line.setAttribute('x2', (tip[0] - 2).toFixed(1)); f.line.setAttribute('y2', '4');
+    }
+  }
+
+  /* ---------- Lighthouse: two flashes every ten seconds ---------- */
+  const lamp = $('#lamp');
+  function updateLamp(T) {
+    const p = T % 10, f = (c) => Math.max(0, 1 - Math.abs(p - c) / .35);
+    lamp.setAttribute('opacity', Math.max(f(.4), f(1.6)).toFixed(2));
+  }
+
+  /* ---------- Director ---------- */
+  let nextEvent = 9, lastType = '';
+  function direct(T) {
+    if (T < nextEvent) return;
+    const ships = actors.filter(a => a.ship).length;
+    const options = ['gull', 'gull-sausage', 'flyfish', 'whale'];
+    if (ships < 3) options.push('ship', 'ship', 'ship');
+    let pick;
+    do { pick = options[Math.floor(Math.random() * options.length)]; } while (pick === lastType);
+    lastType = pick;
+    if (pick === 'ship') {
+      const type = ['coaster', 'coaster', 'ferry', 'sail'][Math.floor(rand(0, 4))];
+      const lane = type === 'sail' || Math.random() < .45 ? 'far' : 'mid';
+      ship(type, lane, Math.random() < .5 ? -1 : 1);
+    } else if (pick === 'gull') gull(false);
+    else if (pick === 'gull-sausage') gull(true);
+    else if (pick === 'flyfish') flyingFish();
+    else whale();
+    nextEvent = T + rand(9, 22);
+  }
+
+  // Opening scene: something already under way
+  ship('coaster', 'mid', -1, vb.x + vb.w * .78);
+  ship('sail', 'far', 1, vb.x + vb.w * .22);
+  actors.forEach(a => a.update(0));
+  updateFisher(0, 0);
+
+  let running = false, last = 0, T = 0, raf = 0, firstGull = false;
+  function tick(now) {
+    const dt = Math.min(.05, (now - last) / 1000 || 0); last = now; T += dt;
+    if (!firstGull && T > 3) { firstGull = true; gull(true); }
+    direct(T);
+    for (let i = actors.length - 1; i >= 0; i--) if (!actors[i].update(dt)) { actors[i].g.remove(); actors.splice(i, 1); }
+    updateFisher(dt, T);
+    updateLamp(T);
+    raf = requestAnimationFrame(tick);
+  }
+  if (!reduced) {
+    new IntersectionObserver(([e]) => {
+      hero.classList.toggle('paused', !e.isIntersecting);
+      if (e.isIntersecting && !running) { running = true; last = performance.now(); raf = requestAnimationFrame(tick); }
+      else if (!e.isIntersecting && running) { running = false; cancelAnimationFrame(raf); }
+    }, { rootMargin: '-1px' }).observe(hero);
+  }
+
+  /* ================= Under water ================= */
+  const ocean = $('.ocean');
+  const lerp = (a, b, k) => a + (b - a) * k;
+  const ease = (k) => 1 - Math.pow(1 - k, 3);
+  function seeded(s) { return () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+  // depth as stepped poster bands
+  const oceanSvg = $('#ocean-bg');
+  const DEPTHS = ['#20556c', '#1c4e65', '#18465c', '#143e53', '#11364a', '#0e2e41', '#0b2636', '#081d2b', '#05141f'];
+  function oceanBg() {
+    const h = ocean.offsetHeight;
+    oceanSvg.setAttribute('viewBox', `0 0 1600 ${h}`);
+    let html = `<rect width="1600" height="${h}" fill="${DEPTHS[0]}"/>`;
+    for (let i = 1; i < DEPTHS.length; i++) html += `<path fill="${DEPTHS[i]}" d="${wavePath(h * i / DEPTHS.length, 9, 360 + i * 37, h + 10, -50, 1660)}"/>`;
+    oceanSvg.innerHTML = html;
+  }
+
+  // the surface from below
+  function waveLine(y0, amp, wl, x0, x1) {
+    let d = '';
+    for (let x = x0; x <= x1; x += 10) d += `${d ? ' L' : 'M'}${x} ${(y0 + amp * Math.sin((x / wl) * Math.PI * 2)).toFixed(1)}`;
+    return d;
+  }
+
+  // god rays
+  let rays = '';
+  for (let i = 0; i < 8; i++) {
+    const tx = rand(560, 1500), tw = rand(22, 70), shift = -rand(160, 340), bw = tw * rand(3, 5.5);
+    rays += `<g class="ray" style="--rd:${rand(6, 12).toFixed(1)}s;animation-delay:-${rand(0, 10).toFixed(1)}s"><polygon fill="url(#rayg)" opacity="${rand(.5, 1).toFixed(2)}" points="${tx - tw / 2},-20 ${tx + tw / 2},-20 ${tx + shift + bw / 2},1000 ${tx + shift - bw / 2},1000"/></g>`;
+  }
+  $('#rays').innerHTML = rays;
+
+  // section decor layers, sized in pixels
+  const decos = ['#deco1', '#deco2', '#deco3'].map(id => ({ svg: $(id), w: 0, h: 0 }));
+  function sizeDecos() {
+    decos.forEach(d => { d.w = d.svg.parentNode.clientWidth; d.h = d.svg.parentNode.clientHeight; d.svg.setAttribute('viewBox', `0 0 ${d.w} ${d.h}`); });
+  }
+
+  // mackerel shoals
+  function shoal(deco, n, sym, o) {
+    const g = mk(deco.svg, '');
+    if (o.fill) g.setAttribute('fill', o.fill);
+    if (o.opacity) g.setAttribute('opacity', o.opacity);
+    const fish = [];
+    for (let i = 0; i < n; i++) {
+      const u = document.createElementNS(NS, 'use');
+      u.setAttribute('href', sym); u.setAttribute('x', -24); u.setAttribute('y', -9); u.setAttribute('width', 48); u.setAttribute('height', 18);
+      g.appendChild(u);
+      const a = rand(0, 6.28), r = Math.sqrt(Math.random());
+      fish.push({ u, ox: Math.cos(a) * r * o.sx, oy: Math.sin(a) * r * o.sy, ph: rand(0, 6.28), s: o.scale * rand(.82, 1.15) });
+    }
+    return (t) => {
+      const W = deco.w, H = deco.h, span = W + 900, run = (t * o.speed + o.offset) % span;
+      const cx = o.dir > 0 ? run - 450 : W + 450 - run;
+      const cy = H * o.y + Math.sin(t * .23 + o.offset) * H * .06;
+      for (const f of fish) {
+        const x = cx + f.ox + Math.sin(t * .7 + f.ph) * 12, y = cy + f.oy + Math.sin(t * .9 + f.ph) * 7;
+        const turn = Math.cos(t * .9 + f.ph) * 4, wig = Math.sin(t * 9 + f.ph) * 7;
+        f.u.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${turn.toFixed(1)}) scale(${(o.dir * f.s).toFixed(2)} ${f.s.toFixed(2)}) skewY(${wig.toFixed(1)})`);
+      }
+    };
+  }
+
+  // kelp, segment by segment
+  function kelpStrand(deco, o) {
+    const g = mk(deco.svg, `<path fill="none" stroke="${o.stem}" stroke-width="${o.sw}" stroke-linecap="round"/><path fill="${o.leaf}"/><path fill="none" stroke="${o.rib}" stroke-width="1" opacity=".55"/>`);
+    const [stem, leaves, ribs] = g.children;
+    const n = 18, lens = Array.from({ length: n }, () => rand(1.7, 2.7)), ph = rand(0, 6.28);
+    return (t) => {
+      const W = deco.w, H = deco.h;
+      let x = o.side === 'L' ? o.off : W - o.off, y = H + 6, a = -Math.PI / 2 + o.lean;
+      const seg = Math.min(H * o.hf, 820 * o.hf) / n, pts = [[x, y, a]];
+      for (let i = 1; i <= n; i++) {
+        a += Math.sin(t * .6 + ph - i * .24) * .034 * (1 + i / n) + o.curl;
+        x += Math.cos(a) * seg; y += Math.sin(a) * seg;
+        pts.push([x, y, a]);
+      }
+      stem.setAttribute('d', 'M' + pts.map(p => `${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' L'));
+      let dl = '', dr = '';
+      for (let i = 3; i <= n; i++) {
+        const [bx, by, ba] = pts[i], side = i % 2 ? 1 : -1, top = i === n;
+        const dir = top ? ba : ba + side * (.75 - i / n * .3) + Math.sin(t * 1.1 + ph + i) * .16;
+        const len = seg * (top ? 4.2 : lens[i - 1]), w = len * (top ? .18 : .27);
+        const tx = bx + Math.cos(dir) * len, ty = by + Math.sin(dir) * len;
+        const mx = (bx + tx) / 2, my = (by + ty) / 2, nx = -Math.sin(dir) * w, ny = Math.cos(dir) * w;
+        dl += `M${bx.toFixed(1)} ${by.toFixed(1)} Q${(mx + nx).toFixed(1)} ${(my + ny).toFixed(1)} ${tx.toFixed(1)} ${ty.toFixed(1)} Q${(mx - nx).toFixed(1)} ${(my - ny).toFixed(1)} ${bx.toFixed(1)} ${by.toFixed(1)}Z`;
+        dr += `M${bx.toFixed(1)} ${by.toFixed(1)} L${(bx + (tx - bx) * .85).toFixed(1)} ${(by + (ty - by) * .85).toFixed(1)}`;
+      }
+      leaves.setAttribute('d', dl); ribs.setAttribute('d', dr);
+    };
+  }
+
+  // moon jellies
+  function jelly(deco, o) {
+    const g = mk(deco.svg, `
+      <path class="j-ten" fill="none" stroke="#ffe2d8" stroke-width=".9" opacity=".5"/>
+      <path class="j-arm" fill="none" stroke="#f6c0b0" stroke-width="3.2" stroke-linecap="round" opacity=".45"/>
+      <g class="j-bell">
+        <path d="M-40 0 C-40 -30 -20 -44 0 -44 C20 -44 40 -30 40 0 C28 5 14 -1 0 4 C-14 -1 -28 5 -40 0 Z" fill="#f4d3c8" fill-opacity=".3" stroke="#ffe9e1" stroke-opacity=".6" stroke-width="1.4"/>
+        <path d="M-30 -24 C-24 -36 -10 -40 2 -40" stroke="#fff" stroke-width="3" fill="none" opacity=".25" stroke-linecap="round"/>
+        <g fill="#f39a7c" opacity=".55"><ellipse cx="-10" cy="-24" rx="6" ry="4.5" transform="rotate(-35 -10 -24)"/><ellipse cx="10" cy="-24" rx="6" ry="4.5" transform="rotate(35 10 -24)"/><ellipse cx="-9" cy="-12" rx="5.5" ry="4" transform="rotate(30 -9 -12)"/><ellipse cx="9" cy="-12" rx="5.5" ry="4" transform="rotate(-30 9 -12)"/></g><circle cx="0" cy="-18" r="3" fill="#fbe3da" opacity=".5"/>
+      </g>`);
+    const ten = g.querySelector('.j-ten'), arms = g.querySelector('.j-arm'), bell = g.querySelector('.j-bell');
+    const ph = rand(0, 6.28);
+    return (t) => {
+      const W = deco.w, H = deco.h, s = Math.max(0, Math.sin(t * 1.7 + ph));
+      const sx = 1 + .1 * s, sy = 1 - .12 * s;
+      const x = W * o.x + Math.sin(t * .13 + ph) * 40, y = H * o.y + Math.sin(t * .18 + ph) * H * .08;
+      g.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${o.size})`);
+      bell.setAttribute('transform', `scale(${sx.toFixed(3)} ${sy.toFixed(3)})`);
+      let dt = '';
+      for (let j = 0; j < 18; j++) {
+        const x0 = (-37 + 74 * j / 17) * sx, len = 24 + 9 * Math.sin(j * 1.7);
+        dt += `M${x0.toFixed(1)} 1`;
+        for (let k = 1; k <= 6; k++) dt += ` L${(x0 + Math.sin(t * 2.1 + j * .7 - k * .6) * 3 * k / 6).toFixed(1)} ${(1 + len * k / 6 * (1 + .2 * s)).toFixed(1)}`;
+      }
+      ten.setAttribute('d', dt);
+      let da = '';
+      [-11, -4, 4, 11].forEach((x0, j) => {
+        const len = 62 + j * 7;
+        da += `M${x0} 2`;
+        for (let k = 1; k <= 10; k++) da += ` L${(x0 + Math.sin(t * 1.6 + j * 1.3 - k * .5) * 5 * k / 10).toFixed(1)} ${(2 + len * k / 10).toFixed(1)}`;
+      });
+      arms.setAttribute('d', da);
+    };
+  }
+
+  // deep-water coral (Lophelia) and sea pens on the seabed
+  function lophelia(g, x, y, scale, seed) {
+    const r = seeded(seed), widths = [4.6, 3.6, 2.8, 2.1, 1.6, 1.2], paths = widths.map(() => ''), tips = [];
+    (function branch(px, py, ang, len, d) {
+      const qx = px + Math.cos(ang) * len, qy = py + Math.sin(ang) * len;
+      paths[d] += `M${px.toFixed(1)} ${py.toFixed(1)} L${qx.toFixed(1)} ${qy.toFixed(1)}`;
+      if (d === widths.length - 1) { tips.push([qx, qy]); return; }
+      const n = r() < .3 ? 3 : 2;
+      for (let i = 0; i < n; i++) branch(qx, qy, ang + (i - (n - 1) / 2) * (.6 + r() * .4) + (r() - .5) * .35, len * (.78 + r() * .14), d + 1);
+      if (r() < .5) tips.push([qx, qy]);
+    })(x, y, -Math.PI / 2 + (r() - .5) * .3, 15 * scale, 0);
+    let html = paths.map((d, i) => `<path d="${d}" stroke="#e7d4c8" stroke-width="${(widths[i] * scale).toFixed(1)}" stroke-linecap="round" fill="none" opacity="${(.75 + i * .05).toFixed(2)}"/>`).join('');
+    html += tips.map(([tx, ty], i) => `<circle cx="${tx.toFixed(1)}" cy="${ty.toFixed(1)}" r="${(2.2 * scale).toFixed(1)}" fill="${i % 3 ? '#f39a7c' : '#e0624a'}"/>`).join('');
+    g.insertAdjacentHTML('beforeend', html);
+  }
+  const lo = $('#lophelia');
+  [[120, 190, 1.1, 3], [200, 194, .7, 5], [330, 192, .9, 7], [560, 190, 1.3, 11], [640, 196, .7, 13], [840, 188, 1, 19], [1040, 186, 1.2, 23], [1120, 192, .7, 29], [1500, 184, 1, 31]].forEach(([x, y, s, seed]) => lophelia(lo, x, y, s, seed));
+  let pens = '';
+  [[260, 200, 1], [700, 196, .8], [960, 198, 1.1], [1150, 202, .9], [1560, 194, .8]].forEach(([x, y, s], i) => {
+    let leaves = '';
+    for (let k = 0; k < 9; k++) {
+      const yy = -14 - k * 5.4, w = 9 - Math.abs(k - 3.5) * 1.2;
+      leaves += `<path d="M0 ${yy} C${-w} ${yy - 2} ${-w - 2} ${yy - 6} ${-w + 1} ${yy - 8} C-3 ${yy - 6} -1 ${yy - 3} 0 ${yy} Z M0 ${yy} C${w} ${yy - 2} ${w + 2} ${yy - 6} ${w - 1} ${yy - 8} C3 ${yy - 6} 1 ${yy - 3} 0 ${yy} Z"/>`;
+    }
+    pens += `<g transform="translate(${x} ${y}) scale(${s})"><g class="seapen" style="--kd:${(5 + i).toFixed(1)}s"><path d="M0 0 L0 -64" stroke="#d9b39f" stroke-width="2.4"/><g fill="#f39a7c" opacity=".85">${leaves}</g></g></g>`;
+  });
+  $('#seapens').innerHTML = pens;
+
+  // the cast
+  const actorsUW = [];
+  const d1 = decos[0], d2 = decos[1];
+  actorsUW.push(shoal(d1, 26, '#fishsil', { fill: '#3b8098', opacity: .45, scale: .55, sx: 220, sy: 60, speed: 20, dir: -1, y: .74, offset: 300 }));
+  actorsUW.push(shoal(d1, 18, '#mackerel', { scale: .95, sx: 170, sy: 38, speed: 34, dir: 1, y: .1, offset: 700 }));
+  [
+    { side: 'L', off: 10, hf: .9, lean: .05, curl: -.002, stem: '#0e3846', leaf: '#0f3c4b', rib: '#1d5466', sw: 3 },
+    { side: 'L', off: 46, hf: .7, lean: -.04, curl: .003, stem: '#0e3846', leaf: '#11414f', rib: '#1d5466', sw: 3 },
+    { side: 'R', off: 30, hf: .78, lean: -.06, curl: .002, stem: '#0e3846', leaf: '#0f3c4b', rib: '#1d5466', sw: 3 },
+    { side: 'L', off: 26, hf: .62, lean: .12, curl: -.004, stem: '#2c4a3c', leaf: '#3a5f4b', rib: '#6f9a78', sw: 4 },
+    { side: 'R', off: 64, hf: .55, lean: -.1, curl: .004, stem: '#2c4a3c', leaf: '#3a5f4b', rib: '#6f9a78', sw: 4 },
+    { side: 'R', off: 8, hf: .94, lean: .02, curl: -.002, stem: '#2c4a3c', leaf: '#45694f', rib: '#7aa582', sw: 4.5 },
+  ].forEach(o => actorsUW.push(kelpStrand(d2, o)));
+  actorsUW.push(jelly(d2, { x: .1, y: .2, size: 1.45 }));
+  actorsUW.push(jelly(d2, { x: .47, y: .72, size: .8 }));
+  actorsUW.push(jelly(d2, { x: .62, y: .16, size: .6 }));
+
+  // bubbles and marine snow
+  document.querySelectorAll('.ocean section').forEach((sec, si) => {
+    for (let i = 0; i < 7; i++) {
+      const b = document.createElement('span'), s = rand(5, 14);
+      b.className = 'bubble';
+      b.style.cssText = `left:${rand(2, 98).toFixed(1)}%;width:${s.toFixed(0)}px;height:${s.toFixed(0)}px;--bd:${rand(10, 22).toFixed(1)}s;--bdl:-${rand(0, 20).toFixed(1)}s`;
+      sec.appendChild(b);
+    }
+    if (si === 0) return;
+    for (let i = 0; i < 18; i++) {
+      const s = document.createElement('span');
+      s.className = 'snow';
+      s.style.cssText = `left:${rand(0, 100).toFixed(1)}%;--sn:${rand(16, 34).toFixed(1)}s;--snd:-${rand(0, 34).toFixed(1)}s;opacity:${rand(.4, 1).toFixed(2)}`;
+      sec.appendChild(s);
+    }
+  });
+
+  let uwOn = false, uwT = 0, uwLast = 0;
+  const uwStep = () => actorsUW.forEach(f => f(uwT));
+  function uwTick(now) {
+    if (!uwOn) return;
+    uwT += Math.min(.05, (now - uwLast) / 1000); uwLast = now;
+    uwStep();
+    requestAnimationFrame(uwTick);
+  }
+  new ResizeObserver(() => { oceanBg(); sizeDecos(); uwStep(); }).observe(ocean);
+  if (!reduced) {
+    new IntersectionObserver(([e]) => {
+      ocean.classList.toggle('paused', !e.isIntersecting);
+      if (e.isIntersecting && !uwOn) { uwOn = true; uwLast = performance.now(); requestAnimationFrame(uwTick); }
+      else if (!e.isIntersecting) uwOn = false;
+    }, { rootMargin: '-1px' }).observe(ocean);
+  }
+
+  // the cod keeps an eye on you
+  const pupil = $('#codpupil'), cod = $('.cod');
+  addEventListener('pointermove', (e) => {
+    const r = cod.getBoundingClientRect();
+    const ex = r.left + r.width * (42 / 270), ey = r.top + r.height * (58 / 140);
+    const a = Math.atan2(e.clientY - ey, e.clientX - ex), d = Math.min(2.8, Math.hypot(e.clientX - ex, e.clientY - ey) / 40);
+    pupil.setAttribute('cx', (42 + Math.cos(a) * d).toFixed(1));
+    pupil.setAttribute('cy', (58 + Math.sin(a) * d).toFixed(1));
+  }, { passive: true });
+
+  /* ================= Polyps: sink, settle into a band, then hang into clear water ================= */
+  const psec = $('.polyps'), pc = $('#polyp-canvas'), px = pc.getContext('2d');
+  const TONES = ['#C24A35', '#CB533D', '#D35C44', '#DB644B', '#E16E54', '#E67B61', '#E9856B', '#EC8E74', '#EF967C', '#F3A389'];
+  let P = [], PW = 0, VH = 0, HOLD = 0, WORLD = 0, BAND_BOT = 0, ROWH = 0, pT = 0, pOn = false, pLast = 0;
+
+  function layoutPolyps() {
+    const dpr = Math.min(2, devicePixelRatio || 1);
+    PW = pc.clientWidth; VH = innerHeight;
+    pc.width = Math.round(PW * dpr); pc.height = Math.round(VH * dpr);
+    px.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const cell = PW < 640 ? 15 : 20, bandRows = 6;
+    ROWH = cell * .87;
+    BAND_BOT = VH;                                   // the band rests on the bottom edge of the screen
+    const bandTop = VH - bandRows * ROWH, reachMax = VH * .78;
+    HOLD = reduced ? 0 : VH * 1.15;
+    $('.polyps-stage').style.height = `${VH}px`;                                // scroll spent watching them sink
+    WORLD = VH + reachMax + VH * .3;                 // then the picture scrolls on into the white
+    psec.style.height = `${Math.round(HOLD + WORLD)}px`;
+
+    const spikes = [];
+    for (let x = rand(-30, 20); x < PW + 60; x += rand(40, 120)) spikes.push({ x, w: rand(60, 210), len: rand(.2, .8), sharp: rand(1, 1.8) });
+    for (let x = rand(60, 200); x < PW; x += rand(160, 320)) spikes.push({ x, w: cell * rand(1.6, 2.4), len: rand(.65, 1), sharp: .7 });
+    const reach = (x) => { let r = 0; for (const s of spikes) { const d = Math.abs(x - s.x) / (s.w / 2); if (d < 1) r = Math.max(r, s.len * Math.pow(1 - d, s.sharp)); } return r; };
+
+    const cols = Math.ceil(PW / cell) + 1, band = [], hang = [];
+    for (let r = 0; r < bandRows; r++) for (let c = -1; c < cols; c++) {
+      band.push({ x: c * cell + (r % 2 ? cell / 2 : 0), y: bandTop + (r + .5) * ROWH, k: 0, tone: Math.max(0, Math.min(3, Math.round((bandRows - 1 - r) * .6 + rand(-.6, .6)))) });
+    }
+    for (let r = 0; r < Math.ceil(reachMax / ROWH); r++) for (let c = -1; c < cols; c++) {
+      const x = c * cell + (r % 2 ? cell / 2 : 0), y = BAND_BOT + (r + .5) * ROWH, k = (y - BAND_BOT) / (reachMax * reach(x));
+      if (k <= .93) hang.push({ x, y, k, tone: Math.min(9, 2 + Math.floor(k * 8)) });
+    }
+    hang.sort((a, b) => a.k - b.k);
+    const cells = band.concat(hang.slice(0, PW < 640 ? 420 : 1100));
+    P = cells.map(f => ({
+      fx: f.x + rand(-1.2, 1.2), fy: f.y + rand(-1.2, 1.2), k: f.k, tone: f.tone,
+      r: cell * (f.k === 0 ? .74 : .66 * (1 - .45 * f.k)) * rand(.92, 1.08),
+      sx: rand(0, PW), sy: rand(VH * .02, VH * .7), spawn: Math.random(), ph: rand(0, 6.28),
+    }));
+    drawPolyps();
+  }
+
+  function drawPolyps() {
+    if (!VH) return;
+    const c = -psec.getBoundingClientRect().top, t = c / VH;
+    const cam = clamp(c - HOLD, 0, WORLD - VH);
+    px.fillStyle = '#05141f'; px.fillRect(0, 0, PW, VH);
+    const wy = BAND_BOT - ROWH * .5 - cam;           // clear water starts behind the last row of the band
+    if (cam > 0 && wy < VH) { px.fillStyle = '#ffffff'; px.fillRect(0, Math.max(0, wy), PW, VH - Math.max(0, wy)); }
+    const paths = TONES.map(() => new Path2D());
+    for (const q of P) {
+      const a0 = reduced ? 1 : clamp((t + .8 - q.spawn * .55) / .12);
+      if (a0 <= 0) continue;
+      const m = reduced ? 1 : ease(clamp((t + .35 - q.spawn * .45) / .55));
+      const free = 1 - m;
+      let x = q.sx + Math.sin(pT * .6 + q.ph) * 16 * free, y = q.sy + (t + .55) * VH * .14 * free;
+      x = lerp(x, q.fx, m); y = lerp(y, q.fy - cam, m);
+      const r = q.r * lerp(.45, 1, m) * a0 * (m === 1 ? 1 + .035 * Math.sin(pT * 1.4 + q.ph) : 1);
+      if (y - r > VH || y + r < 0) continue;
+      const tone = Math.round(lerp(7, q.tone, m));
+      const p = paths[tone];
+      p.moveTo(x + r, y); p.arc(x, y, r, 0, Math.PI * 2);
+    }
+    paths.forEach((p, i) => { px.fillStyle = TONES[i]; px.fill(p); });
+  }
+  function polypTick(now) {
+    if (!pOn) return;
+    pT += Math.min(.05, (now - pLast) / 1000); pLast = now;
+    drawPolyps();
+    requestAnimationFrame(polypTick);
+  }
+  new IntersectionObserver(([e]) => {
+    pOn = e.isIntersecting && !reduced;
+    if (pOn) { pLast = performance.now(); requestAnimationFrame(polypTick); }
+  }).observe(psec);
+  addEventListener('scroll', () => { if (!pOn) drawPolyps(); }, { passive: true });
+  let lastW = 0, lastH = 0;
+  function relayout() {
+    if (Math.abs(innerWidth - lastW) < 2 && Math.abs(innerHeight - lastH) < 120) return;
+    lastW = innerWidth; lastH = innerHeight;
+    layoutPolyps();
+  }
+  addEventListener('resize', relayout);
+  relayout();
+})();
+</script>
+<script>
+  document.querySelectorAll('.card').forEach(card => {
+    const btn = card.querySelector('.flip'), front = card.querySelector('.front'), back = card.querySelector('.back');
+    const label = btn.getAttribute('aria-label');
+    const flip = () => {
+      const on = card.classList.toggle('flipped');
+      btn.setAttribute('aria-expanded', on);
+      btn.setAttribute('aria-label', on ? 'Vis forsiden' : label);
+      front.inert = on; back.inert = !on;
+    };
+    card.addEventListener('click', (e) => { if (!e.target.closest('a')) flip(); });
+  });
+</script>
+</body>
+</html>
